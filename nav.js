@@ -156,37 +156,37 @@ document.addEventListener('DOMContentLoaded', () => {
 function initSecretPhotosEasterEgg() {
   const secretPhotos = [
     {
-      url: encodeURI("секретные фото/Extreme_close_up_macrophotography_202608141647.jpeg"),
+      url: encodeURI("секретные фото/extreme_close_up_macrophotography_202608141647.jpeg"),
       title: "Экстремальный макро-план",
       subtitle: "Высокодетализированная съемка структурных элементов каркаса"
     },
     {
-      url: encodeURI("секретные фото/Macro_camera_angle_of_scene_202608141647.jpeg"),
+      url: encodeURI("секретные фото/macro_camera_angle_of_scene_202608141647.jpeg"),
       title: "Инженерный ракурс остекления",
       subtitle: "Конструктивные узлы светопрозрачной кровли и климат-контроля"
     },
     {
-      url: encodeURI("секретные фото/Macro_camera_zoom_on_detail_202608141646.jpeg"),
+      url: encodeURI("секретные фото/macro_camera_zoom_on_detail_202608141646.jpeg"),
       title: "Фокусировка на микроклимате",
       subtitle: "Сенсорные датчики влажности и капельная подача раствора"
     },
     {
-      url: encodeURI("секретные фото/Macro_photography_of_image_detail_202608141647 (5).jpeg"),
+      url: encodeURI("секретные фото/macro_photography_of_image_detail_202608141647 (5).jpeg"),
       title: "Прецизионная детализация узлов",
       subtitle: "Точные соединения несущих стоек и энергоэффективные профили"
     },
     {
-      url: encodeURI("секретные фото/Macro_photography_revealing_imag…_202608141646.jpeg"),
+      url: encodeURI("секретные фото/macro_photography_revealing_imag…_202608141646.jpeg"),
       title: "Внутренняя экосистема теплицы",
       subtitle: "Рабочая зона ухода, многоярусные лотки культур и освещение"
     },
     {
-      url: encodeURI("секретные фото/Macro_shot_revealing_image_detail_202608141646.jpeg"),
+      url: encodeURI("секретные фото/macro_shot_revealing_image_detail_202608141646.jpeg"),
       title: "Прорастание микрозелени и корни",
       subtitle: "Капельное увлажнение, капли росы и здоровая корневая среда"
     },
     {
-      url: encodeURI("секретные фото/Side_profile_view_of_subject_202608141649.jpeg"),
+      url: encodeURI("секретные фото/side_profile_view_of_subject_202608141649.jpeg"),
       title: "Боковой архитектурный профиль",
       subtitle: "Панорамный фасад умной теплицы с центральной климатической башней"
     }
