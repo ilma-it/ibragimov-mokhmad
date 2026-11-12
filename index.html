@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="dark" lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Оранжерея - Главная</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#06151c",
+            "surface-dim": "#06151c",
+            "surface-bright": "#2c3b43",
+            "surface-container-lowest": "#021017",
+            "surface-container-low": "#0e1d25",
+            "surface-container": "#122129",
+            "surface-container-high": "#1d2c34",
+            "surface-container-highest": "#28373f",
+            "primary": "#accec5",
+            "primary-container": "#84a59d",
+            "on-primary-container": "#1b3b35",
+            "primary-fixed": "#c7eae1",
+            "secondary": "#c1c9bc",
+            "tertiary": "#a6cfc3",
+            "tertiary-container": "#7ea69b",
+            "on-surface": "#d5e5ef",
+            "on-surface-variant": "#c1c8c5",
+            "outline": "#8b9290",
+            "outline-variant": "#414846",
+            "background": "#06151c"
+          },
+          borderRadius: {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            "Montserrat": ["Montserrat", "sans-serif"],
+            "Plus Jakarta Sans": ["Plus Jakarta Sans", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col font-['Plus_Jakarta_Sans'] selection:bg-primary-container selection:text-on-primary-container">
+
+  <!-- TopNavBar -->
+  <header class="fixed top-0 w-full z-50 bg-[#06151c]/60 backdrop-blur-[32px] border-b border-white/10 shadow-[0_40px_40px_rgba(172,206,197,0.15)]">
+    <div class="flex justify-between items-center px-6 md:px-16 py-4 max-w-7xl mx-auto">
+      
+      <!-- Brand Logo + Secret Leaf Trigger -->
+      <div class="flex items-center gap-3">
+        <div class="leaf-icon-btn w-10 h-10 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center hover:scale-110 transition-all duration-300 cursor-pointer hover:bg-primary/30 hover:border-primary shadow-[0_0_12px_rgba(172,206,197,0.3)]">
+          <span class="material-symbols-outlined text-primary text-2xl select-none">eco</span>
+        </div>
+        <a href="index.html" class="brand-glow font-['Montserrat'] font-bold text-2xl md:text-3xl text-primary tracking-tight">
+          Оранжерея
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a class="font-['Montserrat'] font-semibold text-primary border-b-2 border-primary pb-1 transition-colors duration-300" href="index.html">
+          Главная
+        </a>
+        <a class="font-['Montserrat'] font-medium text-on-surface-variant/80 hover:text-primary transition-colors duration-300" href="gallery.html">
+          Галерея
+        </a>
+        <a class="font-['Montserrat'] font-medium text-on-surface-variant/80 hover:text-primary transition-colors duration-300" href="model.html">
+          3D Модель
+        </a>
+        <button class="theme-toggle-btn ml-2" type="button" aria-label="Переключить тему" title="Переключить тему">
+          <span class="material-symbols-outlined theme-icon-dark text-xl">light_mode</span>
+          <span class="material-symbols-outlined theme-icon-light text-xl">dark_mode</span>
+        </button>
+      </nav>
+
+      <!-- Contact Button -->
+      <div class="hidden md:block">
+        <button class="contact-trigger px-6 py-2.5 rounded-full bg-primary-container text-on-primary-container font-semibold text-sm hover:bg-primary transition-all duration-300 shadow-[0_4px_16px_rgba(172,206,197,0.2)] active:scale-95">
+          Связаться
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="md:hidden text-primary p-2 focus:outline-none" aria-label="Открыть меню">
+        <span class="material-symbols-outlined text-3xl">menu</span>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0e1d25]/95 backdrop-blur-2xl border-b border-white/10 px-6 py-6 flex flex-col space-y-4">
+      <a class="font-['Montserrat'] font-semibold text-primary text-lg" href="index.html">Главная</a>
+      <a class="font-['Montserrat'] font-medium text-on-surface-variant hover:text-primary text-lg" href="gallery.html">Галерея</a>
+      <a class="font-['Montserrat'] font-medium text-on-surface-variant hover:text-primary text-lg" href="model.html">3D Модель</a>
+      <div class="mobile-theme-row pt-4 mt-2 border-t border-white/10 flex items-center justify-between">
+        <span class="text-sm font-['Montserrat'] font-medium text-on-surface-variant">Тема оформления</span>
+        <button class="theme-toggle-btn" type="button" aria-label="Переключить тему">
+          <span class="material-symbols-outlined theme-icon-dark text-xl">light_mode</span>
+          <span class="material-symbols-outlined theme-icon-light text-xl">dark_mode</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Hero Section -->
+  <main class="flex-grow relative w-full h-screen min-h-[600px] flex items-center justify-center">
+    
+    <!-- Background Image -->
+    <div class="absolute inset-0 w-full h-full overflow-hidden">
+      <img 
+        alt="Оранжерея панорама" 
+        class="w-full h-full object-cover" 
+        src="отрендереные фото модели/Aerial_view_of_scene_202608141646.jpeg"
+        onerror="this.src='отрендереные%20фото%20модели/Aerial_view_of_scene_202608141646.jpeg'"
+      />
+      <div class="absolute inset-0 bg-[#06151c]/45 backdrop-blur-[2px]"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#06151c] via-transparent to-[#06151c]/50"></div>
+    </div>
+
+    <!-- Hero Content Overlay (Matching reference media_1789212669637.jpg) -->
+    <div class="relative z-10 w-full flex flex-col justify-center items-center px-4 sm:px-6 pt-16">
+      <div class="glass-panel rounded-3xl p-8 sm:p-14 max-w-2xl text-center transform transition-all duration-700 hover:scale-[1.02] hover:bg-[rgba(47,62,70,0.5)] shadow-2xl">
+        <div class="author-hero-container">
+          <div id="author-hero-badge" class="author-hero-badge">
+            <span class="author-hero-dot"></span>
+            <span class="author-hero-text">Ибрагимов Мохмад</span>
+          </div>
+        </div>
+        <h1 class="font-['Montserrat'] font-bold text-3xl sm:text-5xl md:text-6xl text-primary mb-4 sm:mb-6 tracking-tight">
+          Проект <span class="brand-glow">Оранжерея</span>
+        </h1>
+        <p class="font-['Plus_Jakarta_Sans'] text-on-surface text-base sm:text-lg mb-8 max-w-lg mx-auto leading-relaxed">
+          Гармония природы и архитектуры
+        </p>
+        <a href="gallery.html" class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary-container text-on-primary-container font-['Plus_Jakarta_Sans'] font-semibold text-sm hover:bg-primary transition-colors duration-300 group shadow-lg active:scale-95">
+          <span>Смотреть проект</span>
+          <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform text-lg">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Contact Modal -->
+  <div id="contact-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 backdrop-blur-md p-4">
+    <div class="glass-card rounded-3xl p-8 max-w-md w-full relative">
+      <button id="close-contact-btn" class="absolute top-5 right-5 text-on-surface-variant hover:text-white transition-colors" aria-label="Закрыть">
+        <span class="material-symbols-outlined text-2xl">close</span>
+      </button>
+
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center text-primary">
+          <span class="material-symbols-outlined text-2xl">mail</span>
+        </div>
+        <div>
+          <h3 class="font-['Montserrat'] font-bold text-xl text-white">Связаться с автором</h3>
+          <p class="text-xs text-on-surface-variant">Проект «Оранжерея»</p>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div class="glass-pane p-4 rounded-2xl flex items-center gap-4 hover:border-primary/40 transition-colors">
+          <span class="material-symbols-outlined text-primary text-2xl">badge</span>
+          <div>
+            <div class="text-xs text-on-surface-variant">Автор проекта</div>
+            <div class="font-semibold text-white">Ибрагимов Мохмад</div>
+          </div>
+        </div>
+
+        <div class="glass-pane p-4 rounded-2xl flex items-center gap-4 hover:border-primary/40 transition-colors">
+          <span class="material-symbols-outlined text-primary text-2xl">architecture</span>
+          <div>
+            <div class="text-xs text-on-surface-variant">Проектное направление</div>
+            <div class="font-semibold text-white">Архитектура & 3D Разработка</div>
+          </div>
+        </div>
+
+        <div class="glass-pane p-4 rounded-2xl flex items-center gap-4 hover:border-primary/40 transition-colors">
+          <span class="material-symbols-outlined text-primary text-2xl">devices</span>
+          <div>
+            <div class="text-xs text-on-surface-variant">Хостинг проекта</div>
+            <div class="font-semibold text-white">Netlify Static Web App</div>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="document.getElementById('contact-modal').classList.add('hidden'); document.getElementById('contact-modal').classList.remove('flex');" class="mt-6 w-full py-3.5 rounded-full bg-primary-container text-on-primary-container font-semibold hover:bg-primary transition-colors">
+        Понятно
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="w-full py-8 bg-surface border-t border-white/5">
+    <div class="flex flex-col md:flex-row justify-between items-center px-6 md:px-16 max-w-7xl mx-auto gap-4 text-center md:text-left">
+      
+      <!-- Brand Text Without Red Function -->
+      <div class="inline-flex items-center gap-1.5 font-['Montserrat'] font-bold text-primary px-3 py-1.5 rounded-full select-none">
+        <span class="brand-glow">Оранжерея</span>
+        <span>• 2026</span>
+      </div>
+
+      <!-- Links -->
+      <div class="flex flex-wrap justify-center gap-6 text-sm text-on-surface-variant">
+        <a href="gallery.html" class="hover:text-primary transition-colors">Галерея</a>
+        <a href="model.html" class="hover:text-primary transition-colors">3D Модель</a>
+        <a href="#" class="contact-trigger hover:text-primary transition-colors">Контакты</a>
+      </div>
+
+      <!-- Copyright -->
+      <div class="text-xs text-tertiary">
+        © 2026 Оранжерея. Все права защищены.
+      </div>
+    </div>
+  </footer>
+
+  <script src="nav.js"></script>
+</body>
+</html>

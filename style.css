@@ -1,0 +1,1007 @@
+/* ==========================================================================
+   Botanical Glass Architecture - Shared Stylesheet
+   Design System: Deep Slate (#06151c) + Sage (#84a59d) + Mint (#accec5)
+   ========================================================================== */
+
+:root {
+  --color-surface: #06151c;
+  --color-surface-dim: #06151c;
+  --color-surface-bright: #2c3b43;
+  --color-surface-container-lowest: #021017;
+  --color-surface-container-low: #0e1d25;
+  --color-surface-container: #122129;
+  --color-surface-container-high: #1d2c34;
+  --color-surface-container-highest: #28373f;
+  
+  --color-primary: #accec5;
+  --color-primary-container: #84a59d;
+  --color-on-primary-container: #1b3b35;
+  --color-primary-fixed: #c7eae1;
+  --color-primary-fixed-dim: #accec5;
+  
+  --color-secondary: #c1c9bc;
+  --color-tertiary: #a6cfc3;
+  --color-tertiary-container: #7ea69b;
+  
+  --color-on-surface: #d5e5ef;
+  --color-on-surface-variant: #c1c8c5;
+  --color-outline: #8b9290;
+  --color-outline-variant: #414846;
+}
+
+/* ==========================================================================
+   Light Theme System (Светлая тема — небесно-голубой кристальный стиль)
+   ========================================================================== */
+html.light {
+  color-scheme: light;
+  --color-surface: #eef6fa;
+  --color-surface-dim: #e2edf5;
+  --color-surface-bright: #ffffff;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #e8f3f8;
+  --color-surface-container: #dcebf4;
+  --color-surface-container-high: #d0e2ee;
+  --color-surface-container-highest: #c4d9e7;
+  
+  --color-primary: #0284c7;
+  --color-primary-container: #0ea5e9;
+  --color-on-primary-container: #ffffff;
+  --color-primary-fixed: #0284c7;
+  --color-primary-fixed-dim: #0369a1;
+  
+  --color-secondary: #475569;
+  --color-tertiary: #0284c7;
+  --color-tertiary-container: #bae6fd;
+  
+  --color-on-surface: #0c212d;
+  --color-on-surface-variant: #334e60;
+  --color-outline: #7ba2b8;
+  --color-outline-variant: #b8d4e4;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+html.light {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #06151c;
+}
+::-webkit-scrollbar-thumb {
+  background: #1d2c34;
+  border-radius: 4px;
+  border: 1px solid rgba(172, 206, 197, 0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #84a59d;
+}
+
+html.light ::-webkit-scrollbar-track {
+  background: #eef6fa;
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: #c4d9e7;
+  border: 1px solid rgba(2, 132, 199, 0.18);
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #0284c7;
+}
+
+/* ==========================================================================
+   Glassmorphic Surfaces (DESIGN.md Level 1 & Level 2)
+   ========================================================================== */
+
+/* Level 1: The Pane */
+.glass-pane,
+.glass-panel {
+  background-color: rgba(47, 62, 70, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Level 2: The Specimen / Glass Card */
+.glass-card {
+  background: linear-gradient(135deg, rgba(47, 62, 70, 0.5) 0%, rgba(47, 62, 70, 0.2) 100%);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 40px 40px rgba(172, 206, 197, 0.12);
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(172, 206, 197, 0.35);
+  box-shadow: 0 40px 60px rgba(2, 16, 23, 0.7), 0 0 35px rgba(172, 206, 197, 0.2);
+}
+
+/* Chips & Badges */
+.chip {
+  background-color: rgba(132, 165, 157, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Botanical Text Gradient */
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #accec5 0%, #ffffff 50%, #a6cfc3 100%);
+}
+
+.text-gradient-mint {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, #accec5, #a6cfc3);
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+@keyframes floatAnimation {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: floatAnimation 5s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.12; transform: scale(1); }
+  50% { opacity: 0.28; transform: scale(1.05); }
+}
+
+.animate-glow {
+  animation: pulseGlow 6s ease-in-out infinite;
+}
+
+/* Entrance Animations */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.25, 1, 0.5, 1), transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fade-in-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+
+/* Lightbox Modal */
+#lightbox {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#lightbox.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* Canvas cursor styling */
+#canvas-container canvas,
+#three-canvas-container canvas {
+  cursor: grab;
+}
+#canvas-container canvas:active,
+#three-canvas-container canvas:active {
+  cursor: grabbing;
+}
+
+/* ==========================================================================
+   Easter Egg 1: Secret Photos Modal (Leaf icon trigger)
+   ========================================================================== */
+
+@keyframes secretModalIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.65) translateY(40px) rotate(-3deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.03) translateY(-4px) rotate(1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0) rotate(0deg);
+  }
+}
+
+.secret-modal-card {
+  animation: secretModalIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.leaf-icon-btn {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.leaf-icon-btn:hover {
+  filter: drop-shadow(0 0 10px rgba(172, 206, 197, 0.6));
+}
+
+/* ==========================================================================
+   Brand Text Glow (Слабое свечение слова "Оранжерея" при наведении)
+   ========================================================================== */
+
+.brand-glow {
+  display: inline-block;
+  transition: color 0.3s ease, text-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.brand-glow:hover {
+  color: #e5f5f0 !important;
+  text-shadow: 0 0 12px rgba(172, 206, 197, 0.65), 0 0 24px rgba(172, 206, 197, 0.35);
+  filter: drop-shadow(0 0 6px rgba(172, 206, 197, 0.4));
+}
+
+/* Hide contacts buttons and modal */
+.contact-trigger,
+#contact-modal {
+  display: none !important;
+}
+
+/* ==========================================================================
+   3D View Button (Кнопка "Просмотр модели" - голубой и белый окрас)
+   ========================================================================== */
+
+.btn-view-3d {
+  background: linear-gradient(135deg, #38bdf8 0%, #7dd3fc 45%, #ffffff 100%);
+  color: #06151c !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.6), 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.btn-view-3d:hover {
+  background: linear-gradient(135deg, #ffffff 0%, #7dd3fc 55%, #38bdf8 100%);
+  box-shadow: 0 0 35px rgba(56, 189, 248, 0.9), 0 6px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.btn-view-3d:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* ==========================================================================
+   Hero Author Inscription ("Ибрагимов Мохмад" - бело-голубой окрас)
+   ========================================================================== */
+
+.author-hero-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.85rem;
+}
+
+.author-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 1.15rem;
+  border-radius: 9999px;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(186, 230, 253, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.22);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  user-select: none;
+}
+
+.author-hero-badge:hover {
+  background: rgba(56, 189, 248, 0.16);
+  border-color: rgba(186, 230, 253, 0.6);
+  box-shadow: 0 0 28px rgba(56, 189, 248, 0.45);
+  transform: translateY(-1px);
+}
+
+.author-hero-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8, 0 0 16px rgba(56, 189, 248, 0.8);
+  animation: pulseAuthorDot 2.2s ease-in-out infinite;
+}
+
+@keyframes pulseAuthorDot {
+  0%, 100% { opacity: 0.65; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.35); box-shadow: 0 0 14px #7dd3fc, 0 0 22px #38bdf8; }
+}
+
+.author-hero-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  background: linear-gradient(135deg, #ffffff 15%, #bae6fd 60%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
+}
+
+/* ==========================================================================
+   Light Mode Component Overrides
+   ========================================================================== */
+
+html.light .glass-pane,
+html.light .glass-panel {
+  background-color: rgba(235, 245, 252, 0.45) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 10px 30px rgba(12, 33, 45, 0.06), inset 0 1px 1px rgba(255, 255, 255, 0.8) !important;
+}
+
+html.light .glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.65) 0%, rgba(220, 238, 250, 0.4) 100%) !important;
+  backdrop-filter: blur(32px) !important;
+  -webkit-backdrop-filter: blur(32px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.75) !important;
+  box-shadow: 0 20px 45px rgba(12, 33, 45, 0.07), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+}
+
+html.light .glass-card:hover {
+  border-color: rgba(56, 189, 248, 0.55) !important;
+  box-shadow: 0 25px 55px rgba(12, 33, 45, 0.12), 0 0 30px rgba(56, 189, 248, 0.28) !important;
+}
+
+/* Ensure text and chips on photo cards remain crisp white */
+html.light .gallery-item .text-white,
+html.light .gallery-item h3,
+html.light .gallery-item p {
+  color: #ffffff !important;
+}
+html.light .gallery-item .chip {
+  background-color: rgba(255, 255, 255, 0.22) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  color: #ffffff !important;
+}
+
+html.light .chip {
+  background-color: rgba(2, 132, 199, 0.1) !important;
+  border-color: rgba(56, 189, 248, 0.3) !important;
+  color: #0284c7 !important;
+}
+
+html.light header {
+  background-color: rgba(238, 246, 250, 0.72) !important;
+  border-color: rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 10px 30px rgba(12, 33, 45, 0.05) !important;
+}
+
+html.light #mobile-menu {
+  background-color: rgba(238, 246, 250, 0.95) !important;
+  border-color: rgba(56, 189, 248, 0.2) !important;
+}
+
+html.light footer {
+  background-color: rgba(228, 240, 248, 0.75) !important;
+  border-color: rgba(56, 189, 248, 0.18) !important;
+}
+
+html.light h1:not(.gallery-item h1),
+html.light h2:not(.gallery-item h2),
+html.light h3:not(.gallery-item h3):not(.btn-view-3d *) {
+  color: #0c212d;
+}
+
+html.light .text-primary {
+  color: #0284c7 !important;
+}
+
+html.light .text-on-surface-variant {
+  color: #334e60 !important;
+}
+
+html.light .text-on-surface {
+  color: #0c212d !important;
+}
+
+html.light .border-white\/10 {
+  border-color: rgba(56, 189, 248, 0.2) !important;
+}
+
+html.light .border-white\/5 {
+  border-color: rgba(56, 189, 248, 0.12) !important;
+}
+
+html.light .bg-surface {
+  background-color: #eef6fa !important;
+}
+
+html.light .bg-\[\#0e1d25\]\/95,
+html.light .bg-\[\#0e1d25\] {
+  background-color: rgba(238, 246, 250, 0.95) !important;
+}
+
+html.light .brand-glow {
+  color: #0284c7 !important;
+}
+
+html.light .brand-glow:hover {
+  color: #0369a1 !important;
+  text-shadow: 0 0 14px rgba(56, 189, 248, 0.6);
+}
+
+html.light .text-gradient {
+  background-image: linear-gradient(90deg, #0284c7 0%, #0ea5e9 50%, #0c212d 100%) !important;
+}
+
+html.light .author-hero-badge {
+  background: rgba(2, 132, 199, 0.08) !important;
+  border-color: rgba(56, 189, 248, 0.35) !important;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.18) !important;
+}
+
+html.light .author-hero-text {
+  background: linear-gradient(135deg, #0c212d 10%, #0369a1 60%, #0284c7 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.3)) !important;
+}
+
+html.light .author-hero-dot {
+  background-color: #0284c7 !important;
+  box-shadow: 0 0 8px #38bdf8 !important;
+}
+
+/* Hero background image veil in light mode */
+html.light .bg-\[\#06151c\]\/45 {
+  background-color: rgba(238, 246, 250, 0.3) !important;
+}
+html.light .from-\[\#06151c\] {
+  --tw-gradient-from: #eef6fa var(--tw-gradient-from-position) !important;
+}
+html.light .to-\[\#06151c\]\/50 {
+  --tw-gradient-to: rgba(238, 246, 250, 0.5) var(--tw-gradient-to-position) !important;
+}
+
+/* Hero primary button */
+html.light .bg-primary-container {
+  background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(2, 132, 199, 0.35) !important;
+}
+html.light .bg-primary-container:hover {
+  background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%) !important;
+  box-shadow: 0 12px 28px rgba(2, 132, 199, 0.5) !important;
+}
+
+/* 3D CTA banner light mode */
+html.light .from-primary\/10 {
+  --tw-gradient-from: rgba(2, 132, 199, 0.12) var(--tw-gradient-from-position) !important;
+}
+html.light .via-\[\#0e1d25\] {
+  --tw-gradient-stops: var(--tw-gradient-from), #e3f0f7 var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+
+/* ==========================================================================
+   Theme Switcher Button & Smooth Universal Theme Transitions
+   ========================================================================== */
+
+/* 1. Global smooth transitioning class applied to root during theme changes */
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition: background-color 0.45s cubic-bezier(0.4, 0, 0.2, 1) !important,
+              background 0.45s cubic-bezier(0.4, 0, 0.2, 1) !important,
+              border-color 0.45s cubic-bezier(0.4, 0, 0.2, 1) !important,
+              color 0.38s cubic-bezier(0.4, 0, 0.2, 1) !important,
+              fill 0.38s cubic-bezier(0.4, 0, 0.2, 1) !important,
+              stroke 0.38s cubic-bezier(0.4, 0, 0.2, 1) !important,
+              box-shadow 0.45s cubic-bezier(0.4, 0, 0.2, 1) !important,
+              text-shadow 0.38s cubic-bezier(0.4, 0, 0.2, 1) !important,
+              opacity 0.38s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* 2. Persistent smooth transitions for all button types across all pages */
+button,
+.btn,
+.theme-toggle-btn,
+.contact-trigger,
+.leaf-icon-btn,
+.btn-view-3d,
+#mobile-menu-btn,
+header nav a,
+#mobile-menu a,
+#btn-rotate,
+#btn-wireframe,
+#btn-light,
+#btn-flip-uv,
+#btn-reset,
+#btn-fullscreen,
+#btn-expand-hints,
+#btn-collapse-hints,
+.hint-row,
+.chip,
+.filter-btn,
+.glass-card,
+.glass-pane,
+.glass-panel,
+#hints-card {
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 3. Theme Toggle Button with Rotating Spring Morph */
+.theme-toggle-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #accec5;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  user-select: none;
+  overflow: hidden;
+  transition: background-color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1) rotate(8deg);
+  border-color: #accec5;
+  color: #ffffff;
+  box-shadow: 0 0 22px rgba(172, 206, 197, 0.55);
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.92);
+}
+
+/* Tactile Click Pulse Animation */
+@keyframes themeBtnPulse {
+  0% { transform: scale(0.88) rotate(-12deg); }
+  50% { transform: scale(1.18) rotate(12deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.theme-btn-pulse {
+  animation: themeBtnPulse 0.48s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* Smooth Sun & Moon Icon Morphing */
+.theme-toggle-btn .theme-icon-dark,
+.theme-toggle-btn .theme-icon-light {
+  position: absolute;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.4s ease !important;
+  pointer-events: none;
+}
+
+/* Dark Mode Icon State: Sun is visible, Moon rotates out */
+html:not(.light) .theme-toggle-btn .theme-icon-dark,
+html.dark .theme-toggle-btn .theme-icon-dark {
+  opacity: 1 !important;
+  transform: rotate(0deg) scale(1) !important;
+  color: #accec5 !important;
+}
+
+html:not(.light) .theme-toggle-btn .theme-icon-light,
+html.dark .theme-toggle-btn .theme-icon-light {
+  opacity: 0 !important;
+  transform: rotate(110deg) scale(0.2) !important;
+  color: #accec5 !important;
+}
+
+html.light .theme-toggle-btn {
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1.5px solid rgba(2, 132, 199, 0.45) !important;
+  color: #0284c7 !important;
+  box-shadow: 0 4px 16px rgba(2, 132, 199, 0.22), inset 0 1px 0 #ffffff !important;
+}
+
+html.light .theme-toggle-btn:hover {
+  transform: scale(1.1) rotate(-8deg);
+  background: #ffffff !important;
+  border-color: #0284c7 !important;
+  color: #0369a1 !important;
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.6), 0 4px 16px rgba(2, 132, 199, 0.25) !important;
+}
+
+/* Light Mode Icon State: Moon is visible, Sun rotates out */
+html.light .theme-toggle-btn .theme-icon-dark {
+  opacity: 0 !important;
+  transform: rotate(-110deg) scale(0.2) !important;
+  color: #0284c7 !important;
+}
+
+html.light .theme-toggle-btn .theme-icon-light {
+  opacity: 1 !important;
+  transform: rotate(0deg) scale(1) !important;
+  color: #0284c7 !important;
+  font-variation-settings: 'FILL' 1 !important;
+}
+
+/* ==========================================================================
+   Light Mode Button & Navigation Visibility Enhancements (Высокий контраст)
+   ========================================================================== */
+
+/* 1. Header Navigation Links (Zero Layout Shift - Pixel-Perfect Across Themes) */
+header nav a {
+  display: inline-flex !important;
+  align-items: center !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  line-height: 1.25rem !important;
+  padding: 0 0 4px 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  border-bottom: 2px solid transparent !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  white-space: nowrap !important;
+  color: rgba(213, 229, 239, 0.75) !important;
+  transition: color 0.3s ease, border-color 0.3s ease !important;
+}
+
+header nav a:hover {
+  color: #accec5 !important;
+  background: transparent !important;
+}
+
+/* Active navigation link in dark mode */
+header nav a.border-b-2,
+header nav a.text-primary {
+  color: #accec5 !important;
+  border-bottom-color: #accec5 !important;
+  font-weight: 600 !important;
+  background: transparent !important;
+}
+
+/* Light mode navigation links: IDENTICAL geometry, zero shift, high contrast */
+html.light header nav a {
+  color: #1a384c !important;
+  font-weight: 600 !important;
+  padding: 0 0 4px 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  border-bottom: 2px solid transparent !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html.light header nav a:hover {
+  color: #0284c7 !important;
+  background: transparent !important;
+}
+
+/* Active navigation link in light mode */
+html.light header nav a.border-b-2,
+html.light header nav a.text-primary {
+  color: #0284c7 !important;
+  border-bottom-color: #0284c7 !important;
+  font-weight: 600 !important;
+  background: transparent !important;
+}
+
+/* 2. Mobile Dropdown Navigation */
+#mobile-menu a {
+  padding: 0.4rem 0.5rem !important;
+  font-weight: 600 !important;
+  transition: color 0.3s ease !important;
+}
+
+html.light #mobile-menu a {
+  color: #1a384c !important;
+}
+
+html.light #mobile-menu a:hover,
+html.light #mobile-menu a.text-primary {
+  color: #0284c7 !important;
+}
+
+/* 3. Mobile Hamburger Button */
+html.light #mobile-menu-btn {
+  color: #0c212d !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(2, 132, 199, 0.3) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(12, 33, 45, 0.08) !important;
+}
+
+/* 4. Leaf Brand Icon Button */
+html.light .leaf-icon-btn {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1.5px solid rgba(2, 132, 199, 0.4) !important;
+  box-shadow: 0 3px 12px rgba(2, 132, 199, 0.18) !important;
+}
+html.light .leaf-icon-btn span {
+  color: #0284c7 !important;
+}
+html.light .leaf-icon-btn:hover {
+  background: #ffffff !important;
+  border-color: #0284c7 !important;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.5) !important;
+}
+
+
+/* 6. 3D Model Page Top Toolbar Buttons */
+html.light #btn-rotate,
+html.light #btn-wireframe,
+html.light #btn-light,
+html.light #btn-flip-uv,
+html.light #btn-reset,
+html.light #btn-fullscreen {
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #0c212d !important;
+  border: 1px solid rgba(2, 132, 199, 0.28) !important;
+  box-shadow: 0 2px 8px rgba(12, 33, 45, 0.08) !important;
+}
+
+html.light #btn-rotate:hover,
+html.light #btn-wireframe:hover,
+html.light #btn-light:hover,
+html.light #btn-flip-uv:hover,
+html.light #btn-reset:hover,
+html.light #btn-fullscreen:hover {
+  background: #ffffff !important;
+  color: #0284c7 !important;
+  border-color: #0284c7 !important;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.4) !important;
+}
+
+/* Dark Mode Active Toolbar Buttons */
+#btn-rotate.active-toggle,
+#btn-wireframe.active-toggle,
+#btn-flip-uv.active-toggle {
+  background-color: rgba(172, 206, 197, 0.3) !important;
+  color: #accec5 !important;
+  border-color: #accec5 !important;
+  box-shadow: 0 0 14px rgba(172, 206, 197, 0.5) !important;
+}
+
+/* Light Mode Active Toolbar Buttons */
+html.light #btn-rotate.active-toggle,
+html.light #btn-wireframe.active-toggle,
+html.light #btn-flip-uv.active-toggle,
+html.light #btn-rotate.bg-primary\/30,
+html.light #btn-wireframe.bg-primary\/30,
+html.light #btn-flip-uv.bg-primary\/30 {
+  background: rgba(2, 132, 199, 0.18) !important;
+  color: #0284c7 !important;
+  border-color: #0284c7 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.45) !important;
+}
+
+/* 7. 3D Model Corner Control Hint Buttons & Card */
+html.light #btn-expand-hints {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1.5px solid rgba(2, 132, 199, 0.4) !important;
+  color: #0c212d !important;
+  box-shadow: 0 8px 24px rgba(12, 33, 45, 0.12) !important;
+}
+
+html.light #btn-expand-hints:hover {
+  background: #ffffff !important;
+  border-color: #0284c7 !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.45) !important;
+}
+
+html.light #btn-expand-hints .hint-mouse-icon {
+  color: #0284c7 !important;
+}
+
+html.light #btn-expand-hints .hint-touch-icon {
+  color: #059669 !important;
+}
+
+html.light #btn-expand-hints .hint-expand-label {
+  color: #0c212d !important;
+  font-weight: 700 !important;
+}
+
+html.light #btn-expand-hints .hint-dot {
+  background-color: rgba(2, 132, 199, 0.4) !important;
+}
+
+html.light #hints-card {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: 1.5px solid rgba(2, 132, 199, 0.35) !important;
+  box-shadow: 0 20px 45px rgba(2, 132, 199, 0.16), 0 4px 14px rgba(12, 33, 45, 0.08) !important;
+}
+
+html.light #hints-card .hints-header,
+html.light #hints-card .border-b {
+  border-bottom-color: rgba(2, 132, 199, 0.22) !important;
+}
+
+html.light #hints-card .hints-title,
+html.light #hints-card .text-white {
+  color: #0c212d !important;
+  font-weight: 700 !important;
+}
+
+html.light #hints-card .hints-icon,
+html.light #hints-card .text-primary {
+  color: #0284c7 !important;
+}
+
+html.light #btn-collapse-hints,
+html.light #hints-card .text-white\/50 {
+  color: #64748b !important;
+}
+
+html.light #btn-collapse-hints:hover {
+  color: #0284c7 !important;
+  background-color: rgba(2, 132, 199, 0.12) !important;
+}
+
+html.light #hints-card .hint-row,
+html.light #hints-card .bg-white\/\[0\.03\] {
+  background: rgba(240, 249, 255, 0.9) !important;
+  border: 1.5px solid rgba(2, 132, 199, 0.22) !important;
+}
+
+html.light #hints-card .hint-row:hover,
+html.light #hints-card .bg-white\/\[0\.03\]:hover {
+  background: #ffffff !important;
+  border-color: rgba(2, 132, 199, 0.45) !important;
+  box-shadow: 0 4px 16px rgba(2, 132, 199, 0.14) !important;
+}
+
+html.light #hints-card .hint-row-mouse .hint-icon-box,
+html.light #hints-card .bg-sky-500\/10 {
+  background: rgba(2, 132, 199, 0.12) !important;
+  border-color: rgba(2, 132, 199, 0.3) !important;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.25) !important;
+}
+
+html.light #hints-card .hint-row-mouse .hint-icon-box span,
+html.light #hints-card .text-sky-300 {
+  color: #0284c7 !important;
+}
+
+html.light #hints-card .hint-row-mouse .hint-title,
+html.light #hints-card .text-sky-200 {
+  color: #0369a1 !important;
+  font-weight: 700 !important;
+}
+
+html.light #hints-card .hint-row-touch .hint-icon-box,
+html.light #hints-card .bg-emerald-500\/10 {
+  background: rgba(16, 185, 129, 0.12) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.25) !important;
+}
+
+html.light #hints-card .hint-row-touch .hint-icon-box span,
+html.light #hints-card .text-emerald-300 {
+  color: #059669 !important;
+}
+
+html.light #hints-card .hint-row-touch .hint-title,
+html.light #hints-card .text-emerald-200 {
+  color: #047857 !important;
+  font-weight: 700 !important;
+}
+
+html.light #hints-card .hint-desc,
+html.light #hints-card .text-on-surface-variant\/90 {
+  color: #334e60 !important;
+  font-weight: 600 !important;
+}
+
+html.light #hints-card .border-white\/10,
+html.light #hints-card .border-white\/5 {
+  border-color: rgba(2, 132, 199, 0.22) !important;
+}
+
+/* 8. Footer Links */
+html.light footer a {
+  color: #334e60 !important;
+  font-weight: 500 !important;
+}
+
+html.light footer a:hover {
+  color: #0284c7 !important;
+  font-weight: 700 !important;
+}
+
+/* 9. 3D CTA Button in Light Mode */
+html.light .btn-view-3d {
+  background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 50%, #38bdf8 100%) !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 4px 20px rgba(2, 132, 199, 0.4) !important;
+}
+html.light .btn-view-3d span,
+html.light .btn-view-3d * {
+  color: #ffffff !important;
+}
+html.light .btn-view-3d:hover {
+  background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0ea5e9 100%) !important;
+  box-shadow: 0 6px 28px rgba(2, 132, 199, 0.6) !important;
+}
+
+/* 10. Video Player & Fullscreen Mode (No Overflows, No Crop) */
+#project-video {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  border-radius: 1rem;
+  background-color: #000000;
+}
+
+#project-video:fullscreen,
+#project-video:-webkit-full-screen,
+#project-video:-moz-full-screen,
+#project-video:-ms-fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  object-fit: contain !important;
+  background-color: #000000 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}

@@ -1,0 +1,335 @@
+<!DOCTYPE html><html class="dark" lang="ru"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Оранжерея - Галерея и Видео</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#2b3229",
+                    "on-tertiary-container": "#133c33",
+                    "on-surface": "#d5e5ef",
+                    "secondary-fixed-dim": "#c1c9bc",
+                    "surface-bright": "#2c3b43",
+                    "inverse-on-surface": "#23323a",
+                    "on-secondary-fixed-variant": "#41493f",
+                    "error-container": "#93000a",
+                    "surface-variant": "#28373f",
+                    "outline": "#8b9290",
+                    "on-secondary-fixed": "#161d15",
+                    "surface-container-high": "#1d2c34",
+                    "tertiary-fixed": "#c1ebdf",
+                    "primary": "#accec5",
+                    "on-surface-variant": "#c1c8c5",
+                    "inverse-primary": "#45645e",
+                    "error": "#ffb4ab",
+                    "surface-container-lowest": "#021017",
+                    "secondary-container": "#41493f",
+                    "tertiary-fixed-dim": "#a6cfc3",
+                    "on-secondary-container": "#afb7ab",
+                    "surface-container-low": "#0e1d25",
+                    "on-primary-container": "#1b3b35",
+                    "on-error": "#690005",
+                    "primary-fixed": "#c7eae1",
+                    "secondary-fixed": "#dde5d8",
+                    "on-primary-fixed": "#00201b",
+                    "outline-variant": "#414846",
+                    "secondary": "#c1c9bc",
+                    "tertiary": "#a6cfc3",
+                    "surface-tint": "#accec5",
+                    "on-tertiary-fixed-variant": "#274e45",
+                    "on-primary-fixed-variant": "#2d4c46",
+                    "surface-dim": "#06151c",
+                    "tertiary-container": "#7ea69b",
+                    "on-background": "#d5e5ef",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary": "#0d372f",
+                    "primary-container": "#84a59d",
+                    "surface": "#06151c",
+                    "primary-fixed-dim": "#accec5",
+                    "surface-container-highest": "#28373f",
+                    "surface-container": "#122129",
+                    "on-primary": "#163630",
+                    "inverse-surface": "#d5e5ef",
+                    "background": "#06151c",
+                    "on-tertiary-fixed": "#00201a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "64px",
+                    "container-max": "1280px",
+                    "unit": "8px",
+                    "glass-padding": "32px",
+                    "margin-mobile": "20px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "display-lg-mobile": [
+                            "Montserrat"
+                    ],
+                    "headline-lg-mobile": [
+                            "Montserrat"
+                    ],
+                    "headline-md": [
+                            "Montserrat"
+                    ],
+                    "headline-lg": [
+                            "Montserrat"
+                    ],
+                    "display-lg": [
+                            "Montserrat"
+                    ],
+                    "body-lg": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "headline-sm": [
+                            "Montserrat"
+                    ],
+                    "body-md": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "label-md": [
+                            "Plus Jakarta Sans"
+                    ]
+            },
+            "fontSize": {
+                    "display-lg-mobile": [
+                            "40px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "32px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-md": [
+                            "32px",
+                            {
+                                    "lineHeight": "1.3",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-lg": [
+                            "40px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-lg": [
+                            "64px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-sm": [
+                            "24px",
+                            {
+                                    "lineHeight": "1.4",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-md": [
+                            "14px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "600"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        .glass-pane {
+            background-color: rgba(47, 62, 70, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .glass-card {
+            background: linear-gradient(135deg, rgba(47, 62, 70, 0.5) 0%, rgba(47, 62, 70, 0.2) 100%);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 40px 40px rgba(172,206,197,0.15);
+        }
+        .chip {
+            background-color: rgba(132, 165, 157, 0.2);
+        }
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(90deg, #accec5, #a6cfc3);
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/40 dark:bg-surface/40 backdrop-blur-32px border-b border-white/10 shadow-[0_40px_40px_rgba(172,206,197,0.15)]">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<!-- Brand Logo -->
+<div class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg font-bold text-primary dark:text-primary">
+                Оранжерея
+            </div>
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex items-center space-x-8"><a class="font-headline-sm text-headline-sm font-Montserrat text-on-surface-variant/80 hover:text-primary transition-colors duration-300" href="{{DATA:SCREEN:SCREEN_6}}">Главная</a><a class="font-headline-sm text-headline-sm font-Montserrat text-primary border-b-2 border-primary pb-1 hover:text-primary transition-colors duration-300" href="{{DATA:SCREEN:SCREEN_5}}">Галерея</a><a class="font-headline-sm text-headline-sm font-Montserrat text-on-surface-variant/80 hover:text-primary transition-colors duration-300" href="{{DATA:SCREEN:SCREEN_3}}">3D Модель</a></nav>
+<!-- Trailing Action (Desktop) -->
+<div class="hidden md:block">
+<button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-6 py-3 rounded-full hover:bg-primary-fixed transition-colors shadow-[0_4px_12px_rgba(172,206,197,0.2)] active:scale-95 transition-transform">
+                    Связаться
+                </button>
+</div>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-primary p-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">menu</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow pt-32 pb-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full">
+<!-- Header Section -->
+<section class="mb-16 md:mb-24 text-center mt-12 md:mt-20">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6">Галерея и Видео</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                Погрузитесь в визуальное путешествие по проекту "Оранжерея". Исследуйте детали интерьера, интеграцию с ландшафтом и процесс создания этого уникального пространства.
+            </p>
+</section>
+<!-- Gallery Bento Grid -->
+<section class="mb-32">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-12">Визуальное Исследование</h2>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter auto-rows-[300px]">
+<!-- Large Feature Image (Spans 8 cols) -->
+<div class="md:col-span-8 md:row-span-2 glass-card rounded-xl overflow-hidden relative group cursor-pointer">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A breathtaking, photorealistic exterior view of a modern glass greenhouse structure surrounded by a lush, manicured landscape at twilight. The greenhouse glows warmly from within, contrasting with the cool, dark slate-blue evening sky. Minimalist architectural lines, sage green metallic framing, high-end editorial lighting, deep shadows, and subtle reflections on the glass panes. Atmosphere is serene, professional, and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQigQPt9wiDIk30XwTyLYkY5aPlStr4qqn6KBDNt54Dwej2kw-a9MV7l8kdpNyA7b8YXcOlNIlWAiqOHzaEUakozXCiLhAUBB7zYeDOe3uMbYpqO8oKuPnK8sV1Edezl7B89vouQyJC4eYj4q68BgEaqhjI1m98F-uKI2N79urn7nPtU47cs51vU29jgiNOQvRrTr9C2GYHZiwvNEpMoMRIXsWJVHktu0z9aAMkK-eq_dg8jTgQ628">
+<div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8">
+<div class="chip inline-block px-4 py-1 rounded-full text-white font-label-md text-label-md mb-3 backdrop-blur-md">Экстерьер</div>
+<h3 class="font-headline-md text-headline-md text-white">Интеграция с ландшафтом</h3>
+</div>
+</div>
+<!-- Tall Right Image (Spans 4 cols, 2 rows) -->
+<div class="md:col-span-4 md:row-span-2 glass-card rounded-xl overflow-hidden relative group cursor-pointer">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A close-up, highly detailed architectural shot focusing on a complex joint of a modern glass greenhouse. The image highlights the technical precision of the dark slate metalwork and the frosted sage-green glass panels. Soft, diffused daylight filters through the glass, creating a soft glowing refraction. The aesthetic is clean, technical, and premium, evoking a sense of high-end engineering." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBto8SKG8b2-8HmOuZ6tAAKeZ4QkGuF6GMo9H8ePIB7aVVIq1NeTL2e2pa_9DrNOuaUSByl_L1E28SlBRyl8WCD6Z8veGIumMYXs_hnr7rSgg5TfeqM1GbnEyzvqVPdCDo4rUs6Iqzt-xIHYvz8X52VkjAWM_K-xaOmWpl8hLq_7yu0F-lx0JkCM-NC9MDKoKLxshCM2muBMSYao7brSHqj6XoiHH6hSXLsFevcNRxxaM8hCbSJuS9l">
+<div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8">
+<div class="chip inline-block px-4 py-1 rounded-full text-white font-label-md text-label-md mb-3 backdrop-blur-md">Детали</div>
+<h3 class="font-headline-sm text-headline-sm text-white">Конструктивные узлы</h3>
+</div>
+</div>
+<!-- Small Square 1 (Spans 4 cols) -->
+<div class="md:col-span-4 glass-card rounded-xl overflow-hidden relative group cursor-pointer">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="An expansive, high-angle interior shot of a modern greenhouse bathed in soft, diffused morning sunlight. The space is filled with meticulously curated rare plant specimens in sleek, dark slate planters. The atmosphere is quiet, airy, and sophisticated. Soft shadows and highlights emphasize the architectural volume and the vibrant, organic vitality of the greenery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAslLRq8V4rzHjGH6PTvbrlLTg1fnRztZ_Gyj7-lNnHDCMnYF1viIksauLIATUT31VU_yPQe5aakjppABaZEFUecz1gnA98Vl-kLaX0ETyqaqLsrkSiQ40lDSXLOGbsvKE4Vcfare-CvcQWKxPe1CQofyHquB0vnck7_oKNNT4sdcH1T2vKsv8067i8PHXBql2_zaLy_WhOiFkFvjlD_n0MH5k2GMhvrw5zJnlUD92ebOxodwLDQlGM">
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-6">
+<div class="chip inline-block px-3 py-1 rounded-full text-white font-label-md text-label-md mb-2 backdrop-blur-md">Интерьер</div>
+<h3 class="font-body-lg text-body-lg text-white font-semibold">Флора</h3>
+</div>
+</div>
+<!-- Medium Wide (Spans 8 cols) -->
+<div class="md:col-span-8 glass-card rounded-xl overflow-hidden relative group cursor-pointer">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A dramatic night shot of the modern greenhouse interior, looking out through the expansive glass panes into the dark surrounding landscape. Subtle, warm artificial lighting illuminates a minimalist seating area inside, featuring premium furniture in muted tones. The dark slate structure frames the view. The mood is intimate, luxurious, and calm." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqTMXfuY7xmqtgbf41OZr8zivzWamXQrc8A9KWR6AD-PBCti_1Yh2VYPu00-S--MPh8k88HBTQojqktzGgcakdOH7VvU_FfgXASqtnKS0Y858s3AdTI5Zg86lgftQxQeowDkpBfB5SFsurMsXhuBYBWeNXnvbkQCQx9VVDQ59VRo7w4twcEczY1gyoCjeRUSwZ6E2oakjX-cCx9KLZorzeQf7Ombh5JNH0lFJbznRg6S6uShfRrtk8">
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-6">
+<div class="chip inline-block px-3 py-1 rounded-full text-white font-label-md text-label-md mb-2 backdrop-blur-md">Интерьер</div>
+<h3 class="font-headline-sm text-headline-sm text-white">Вечернее освещение</h3>
+</div>
+</div>
+</div>
+</section>
+<!-- Video Section -->
+<section class="mb-24">
+<div class="flex flex-col md:flex-row justify-between items-end mb-12">
+<div class="max-w-xl">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">Как это создавалось</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Посмотрите короткий документальный фильм о процессе проектирования и строительства, от первых эскизов до финальной реализации.
+                    </p>
+</div>
+</div>
+<!-- Video Player Glass Container -->
+<div class="glass-card rounded-xl p-glass-padding relative w-full aspect-video flex items-center justify-center overflow-hidden group cursor-pointer shadow-[0_40px_80px_rgba(172,206,197,0.1)]">
+<!-- Video Placeholder Image -->
+<img class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-500" data-alt="A wide, cinematic still from a documentary video about constructing a modern greenhouse. The scene shows an active construction site with precise steel framework being erected against a clear, deep blue sky. Soft, golden hour light casts long shadows, highlighting the geometric precision of the structure. The overall aesthetic is clean, industrial, yet high-end and professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdIoVCkQVPZvhAEBHULMsvHZFpFtUQumGoITKxp6hph-z1TvOdErVQ74u3DX5ZR4hZCQDkLSs74UHwezjyVzCqogxULN8PhMmU_PS3yPmTssDRQjzfNooje_njL-JXskZDNpkBPi6MtaZBKO5V0BfblhVlkIb6K0_hLuBQe00SbfJ5jrJib-LgMNtiyIAzO2I0-ltAli5lN65K-Qmt-9GLNOrk0HkIayMQtG-8fdJ0QSbrUiUoLp5w">
+<!-- Play Button -->
+<div class="relative z-10 w-24 h-24 rounded-full bg-primary-container/80 backdrop-blur-md flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-primary-fixed transition-all duration-300">
+<span class="material-symbols-outlined text-on-primary-container" style="font-size: 48px; font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+<!-- Progress Bar Mockup -->
+<div class="absolute bottom-0 left-0 w-full h-2 bg-surface-variant/50">
+<div class="h-full bg-primary w-1/3"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 bg-surface dark:bg-surface border-t border-white/5">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto space-y-6 md:space-y-0">
+<!-- Brand Logo -->
+<div class="font-headline-sm text-headline-sm font-bold text-primary">
+                Оранжерея
+            </div>
+<!-- Links -->
+<div class="flex flex-wrap justify-center gap-6">
+<a class="font-body-md text-body-md font-Plus Jakarta Sans text-on-surface-variant hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">
+                    Конфиденциальность
+                </a>
+<a class="font-body-md text-body-md font-Plus Jakarta Sans text-on-surface-variant hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">
+                    Условия использования
+                </a>
+<a class="font-body-md text-body-md font-Plus Jakarta Sans text-on-surface-variant hover:text-primary-fixed-dim transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">
+                    Контакты
+                </a>
+</div>
+<!-- Copyright -->
+<div class="font-body-md text-body-md font-Plus Jakarta Sans text-tertiary dark:text-tertiary text-center md:text-right">
+                © 2024 Оранжерея. Все права защищены.
+            </div>
+</div>
+</footer>
+
+
+</body></html>

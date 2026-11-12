@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html class="dark" lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Оранжерея - Галерея и Видео</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#06151c",
+            "surface-dim": "#06151c",
+            "surface-bright": "#2c3b43",
+            "surface-container-lowest": "#021017",
+            "surface-container-low": "#0e1d25",
+            "surface-container": "#122129",
+            "surface-container-high": "#1d2c34",
+            "surface-container-highest": "#28373f",
+            "primary": "#accec5",
+            "primary-container": "#84a59d",
+            "on-primary-container": "#1b3b35",
+            "primary-fixed": "#c7eae1",
+            "secondary": "#c1c9bc",
+            "tertiary": "#a6cfc3",
+            "tertiary-container": "#7ea69b",
+            "on-surface": "#d5e5ef",
+            "on-surface-variant": "#c1c8c5",
+            "outline": "#8b9290",
+            "outline-variant": "#414846",
+            "background": "#06151c"
+          },
+          borderRadius: {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            "Montserrat": ["Montserrat", "sans-serif"],
+            "Plus Jakarta Sans": ["Plus Jakarta Sans", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col font-['Plus_Jakarta_Sans'] selection:bg-primary-container selection:text-on-primary-container">
+
+  <!-- TopNavBar -->
+  <header class="fixed top-0 w-full z-50 bg-[#06151c]/60 backdrop-blur-[32px] border-b border-white/10 shadow-[0_40px_40px_rgba(172,206,197,0.15)]">
+    <div class="flex justify-between items-center px-6 md:px-16 py-4 max-w-7xl mx-auto">
+      
+      <!-- Brand Logo + Secret Leaf Trigger -->
+      <div class="flex items-center gap-3">
+        <div class="leaf-icon-btn w-10 h-10 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center hover:scale-110 transition-all duration-300 cursor-pointer hover:bg-primary/30 hover:border-primary shadow-[0_0_12px_rgba(172,206,197,0.3)]">
+          <span class="material-symbols-outlined text-primary text-2xl select-none">eco</span>
+        </div>
+        <a href="index.html" class="brand-glow font-['Montserrat'] font-bold text-2xl md:text-3xl text-primary tracking-tight">
+          Оранжерея
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a class="font-['Montserrat'] font-medium text-on-surface-variant/80 hover:text-primary transition-colors duration-300" href="index.html">
+          Главная
+        </a>
+        <a class="font-['Montserrat'] font-semibold text-primary border-b-2 border-primary pb-1 transition-colors duration-300" href="gallery.html">
+          Галерея
+        </a>
+        <a class="font-['Montserrat'] font-medium text-on-surface-variant/80 hover:text-primary transition-colors duration-300" href="model.html">
+          3D Модель
+        </a>
+        <button class="theme-toggle-btn ml-2" type="button" aria-label="Переключить тему" title="Переключить тему">
+          <span class="material-symbols-outlined theme-icon-dark text-xl">light_mode</span>
+          <span class="material-symbols-outlined theme-icon-light text-xl">dark_mode</span>
+        </button>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="md:hidden text-primary p-2 focus:outline-none" aria-label="Открыть меню">
+        <span class="material-symbols-outlined text-3xl">menu</span>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0e1d25]/95 backdrop-blur-2xl border-b border-white/10 px-6 py-6 flex flex-col space-y-4">
+      <a class="font-['Montserrat'] font-medium text-on-surface-variant hover:text-primary text-lg" href="index.html">Главная</a>
+      <a class="font-['Montserrat'] font-semibold text-primary text-lg" href="gallery.html">Галерея</a>
+      <a class="font-['Montserrat'] font-medium text-on-surface-variant hover:text-primary text-lg" href="model.html">3D Модель</a>
+      <div class="mobile-theme-row pt-4 mt-2 border-t border-white/10 flex items-center justify-between">
+        <span class="text-sm font-['Montserrat'] font-medium text-on-surface-variant">Тема оформления</span>
+        <button class="theme-toggle-btn" type="button" aria-label="Переключить тему">
+          <span class="material-symbols-outlined theme-icon-dark text-xl">light_mode</span>
+          <span class="material-symbols-outlined theme-icon-light text-xl">dark_mode</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow pt-24 pb-4 px-4 sm:px-6 md:px-16 max-w-7xl mx-auto w-full">
+
+    <!-- Header Section -->
+    <section class="mb-8 text-center mt-2 fade-in-up">
+      <h1 class="font-['Montserrat'] font-bold text-3xl sm:text-5xl md:text-6xl text-primary">
+        Галерея и Видео
+      </h1>
+    </section>
+
+    <!-- Video Section (Top Position) -->
+    <section class="mb-20 fade-in-up" id="video-section">
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-2.5">
+          <span class="material-symbols-outlined text-primary text-xl">movie</span>
+          <h2 class="font-['Montserrat'] font-bold text-2xl sm:text-3xl text-on-surface">
+            Как это создавалось
+          </h2>
+        </div>
+      </div>
+
+      <!-- Video Player Glass Container -->
+      <div class="glass-card rounded-2xl sm:rounded-3xl p-2 sm:p-5 md:p-6 relative w-full aspect-video flex items-center justify-center overflow-hidden shadow-2xl group bg-black/40">
+        
+        <!-- Video Element -->
+        <video 
+          id="project-video"
+          class="w-full h-full object-contain rounded-xl sm:rounded-2xl cursor-pointer bg-black/70"
+          src="%D0%BA%D1%80%D1%83%D1%82%D0%BE%D0%B5%20%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE/%D0%A2%D0%95%D0%9F%D0%9B%D0%98%D0%A6%D0%90%20(1).mp4"
+          poster="%D0%BE%D1%82%D1%80%D0%B5%D0%BD%D0%B4%D0%B5%D1%80%D0%B5%D0%BD%D1%8B%D0%B5%20%D1%84%D0%BE%D1%82%D0%BE%20%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D0%B8/Side_profile_view_of_subject_202608141647.jpeg"
+          preload="metadata"
+          playsinline
+          webkit-playsinline="true"
+          x5-playsinline="true"
+          controls
+        >
+          <source src="%D0%BA%D1%80%D1%83%D1%82%D0%BE%D0%B5%20%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE/%D0%A2%D0%95%D0%9F%D0%9B%D0%98%D0%A6%D0%90%20(1).mp4" type="video/mp4">
+          <source src="%D0%BA%D1%80%D1%83%D1%82%D0%BE%D0%B5%20%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE/%D0%A2%D0%95%D0%9F%D0%9B%D0%98%D0%A6%D0%90%20%281%29.mp4" type="video/mp4">
+          <source src="крутое видео/ТЕПЛИЦА (1).mp4" type="video/mp4">
+          Ваш браузер не поддерживает воспроизведение HTML5 видео.
+        </video>
+
+        <!-- Custom Play / Pause Center Button -->
+        <div id="video-play-btn" class="absolute z-20 w-24 sm:w-28 h-24 sm:h-28 rounded-full bg-[#84a59d]/85 backdrop-blur-md flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-[#accec5] transition-all duration-300 cursor-pointer pointer-events-auto select-none touch-manipulation" title="Воспроизведение / Пауза">
+          <span id="video-play-icon" class="material-symbols-outlined text-[#163630] text-4xl sm:text-5xl select-none pointer-events-none" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+        </div>
+
+        <!-- Progress Bar Dynamic Bar (pointer-events-none) -->
+        <div class="absolute bottom-0 left-0 w-full h-1.5 bg-[#28373f]/60 z-10 pointer-events-none opacity-0 transition-opacity">
+          <div id="video-progress" class="h-full bg-primary w-0 transition-all pointer-events-none"></div>
+        </div>
+
+      </div>
+
+      <!-- Video Metrics Below -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
+        <div class="glass-pane p-4 rounded-2xl text-center">
+          <div class="text-primary font-['Montserrat'] font-bold text-xl mb-1">450 м²</div>
+          <div class="text-xs text-on-surface-variant">Площадь остекления</div>
+        </div>
+        <div class="glass-pane p-4 rounded-2xl text-center">
+          <div class="text-primary font-['Montserrat'] font-bold text-xl mb-1">12 м</div>
+          <div class="text-xs text-on-surface-variant">Высота купола</div>
+        </div>
+        <div class="glass-pane p-4 rounded-2xl text-center">
+          <div class="text-primary font-['Montserrat'] font-bold text-xl mb-1">4K UHD</div>
+          <div class="text-xs text-on-surface-variant">Разрешение рендеров</div>
+        </div>
+        <div class="glass-pane p-4 rounded-2xl text-center">
+          <div class="text-primary font-['Montserrat'] font-bold text-xl mb-1">100%</div>
+          <div class="text-xs text-on-surface-variant">Автономный климат</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Bento Grid (3D Renders) -->
+    <section class="mb-16 fade-in-up">
+      <div class="flex items-center gap-2.5 mb-6">
+        <span class="material-symbols-outlined text-primary text-xl">photo_camera</span>
+        <h2 class="font-['Montserrat'] font-bold text-2xl sm:text-3xl text-on-surface">
+          3D Рендеры модели
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[280px]">
+        
+        <!-- Large Feature Image (Spans 8 cols, 2 rows) -->
+        <div class="gallery-item md:col-span-8 md:row-span-2 glass-card rounded-3xl overflow-hidden relative group cursor-pointer"
+             data-img="отрендереные фото модели/Aerial_view_of_scene_202608141646.jpeg"
+             data-title="Интеграция с ландшафтом"
+             data-desc="Панорамный вид оранжереи в природном ландшафте. Светопрозрачные конструкции и бионический купол.">
+          <img 
+            src="отрендереные фото модели/Aerial_view_of_scene_202608141646.jpeg" 
+            alt="Интеграция с ландшафтом" 
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#06151c]/90 via-[#06151c]/25 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6 sm:p-8">
+            <div class="chip inline-block px-4 py-1 rounded-full text-white text-xs font-semibold mb-3 backdrop-blur-md">
+              Экстерьер
+            </div>
+            <h3 class="font-['Montserrat'] font-bold text-2xl sm:text-3xl text-white tracking-tight">
+              Интеграция с ландшафтом
+            </h3>
+          </div>
+        </div>
+
+        <!-- Tall Right Image (Spans 4 cols, 2 rows) -->
+        <div class="gallery-item md:col-span-4 md:row-span-2 glass-card rounded-3xl overflow-hidden relative group cursor-pointer"
+             data-img="отрендереные фото модели/Camera_panning_down_revealing_de…_202608141647.jpeg"
+             data-title="Конструктивные узлы"
+             data-desc="Высокоточные алюминиевые профили и стыки остекления.">
+          <img 
+            src="отрендереные фото модели/Camera_panning_down_revealing_de…_202608141647.jpeg" 
+            alt="Конструктивные узлы" 
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#06151c]/90 via-[#06151c]/25 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6 sm:p-8">
+            <div class="chip inline-block px-4 py-1 rounded-full text-white text-xs font-semibold mb-3 backdrop-blur-md">
+              Детали
+            </div>
+            <h3 class="font-['Montserrat'] font-bold text-xl sm:text-2xl text-white tracking-tight">
+              Конструктивные узлы
+            </h3>
+          </div>
+        </div>
+
+        <!-- Small Square / 4 cols -->
+        <div class="gallery-item md:col-span-4 glass-card rounded-3xl overflow-hidden relative group cursor-pointer"
+             data-img="отрендереные фото модели/Camera_panning_left_202608141647.jpeg"
+             data-title="Флора"
+             data-desc="Внутренняя флора оранжереи, естественное освещение и микроклимат.">
+          <img 
+            src="отрендереные фото модели/Camera_panning_left_202608141647.jpeg" 
+            alt="Флора" 
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#06151c]/80 via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6">
+            <div class="chip inline-block px-3 py-1 rounded-full text-white text-xs font-semibold mb-2 backdrop-blur-md">
+              Интерьер
+            </div>
+            <h3 class="font-['Montserrat'] font-semibold text-lg text-white">
+              Флора
+            </h3>
+          </div>
+        </div>
+
+        <!-- Medium Wide / 8 cols -->
+        <div class="gallery-item md:col-span-8 glass-card rounded-3xl overflow-hidden relative group cursor-pointer"
+             data-img="отрендереные фото модели/Side_profile_view_of_subject_202608141647.jpeg"
+             data-title="Вечернее освещение"
+             data-desc="Оранжерея в вечерних лучах заката. Энергоэффективное остекление и подсветка.">
+          <img 
+            src="отрендереные фото модели/Side_profile_view_of_subject_202608141647.jpeg" 
+            alt="Вечернее освещение" 
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#06151c]/85 via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6">
+            <div class="chip inline-block px-3 py-1 rounded-full text-white text-xs font-semibold mb-2 backdrop-blur-md">
+              Интерьер
+            </div>
+            <h3 class="font-['Montserrat'] font-semibold text-xl text-white">
+              Вечернее освещение
+            </h3>
+          </div>
+        </div>
+
+        <!-- Extra Detail Cards from Project Assets -->
+        <div class="gallery-item md:col-span-6 glass-card rounded-3xl overflow-hidden relative group cursor-pointer"
+             data-img="отрендереные фото модели/Camera_pans_left_revealing_details_202608141649.jpeg"
+             data-title="Стеклянная оболочка"
+             data-desc="Двухкамерные термоизолированные энергосберегающие панели купола.">
+          <img 
+            src="отрендереные фото модели/Camera_pans_left_revealing_details_202608141649.jpeg" 
+            alt="Стеклянная оболочка" 
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#06151c]/80 via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6">
+            <div class="chip inline-block px-3 py-1 rounded-full text-white text-xs font-semibold mb-2 backdrop-blur-md">
+              Остекление
+            </div>
+            <h3 class="font-['Montserrat'] font-semibold text-lg text-white">
+              Стеклянная оболочка
+            </h3>
+          </div>
+        </div>
+
+        <div class="gallery-item md:col-span-6 glass-card rounded-3xl overflow-hidden relative group cursor-pointer"
+             data-img="отрендереные фото модели/Macro_camera_angle_of_scene_202608141647.jpeg"
+             data-title="Детализация профиля"
+             data-desc="Прецизионные стыки анодированного алюминиевого каркаса.">
+          <img 
+            src="отрендереные фото модели/Macro_camera_angle_of_scene_202608141647.jpeg" 
+            alt="Детализация профиля" 
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#06151c]/80 via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6">
+            <div class="chip inline-block px-3 py-1 rounded-full text-white text-xs font-semibold mb-2 backdrop-blur-md">
+              Макро
+            </div>
+            <h3 class="font-['Montserrat'] font-semibold text-lg text-white">
+              Детализация профиля
+            </h3>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Raw Photos Section (Сырые фото модели) -->
+    <section class="mb-14 fade-in-up" id="raw-photos-section">
+      <div class="flex items-center gap-2.5 mb-6">
+        <span class="material-symbols-outlined text-primary text-xl">construction</span>
+        <h2 class="font-['Montserrat'] font-bold text-2xl sm:text-3xl text-on-surface">
+          Сырые фото модели (Каркас)
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[280px]">
+        
+        <!-- Raw Photo 1: каркас.jpg (Large 8 cols, 2 rows) -->
+        <div class="gallery-item md:col-span-8 md:row-span-2 glass-card rounded-3xl overflow-hidden relative group cursor-pointer"
+             data-img="сырые фото модели/каркас.jpg"
+             data-title="Сырой каркас — Общая геометрия"
+             data-desc="Базовый каркас оранжереи: пространственные дуговые арки и продольные связи.">
+          <img 
+            src="сырые фото модели/каркас.jpg" 
+            alt="Сырой каркас — Общая геометрия" 
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#06151c]/90 via-[#06151c]/25 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6 sm:p-8">
+            <div class="chip inline-block px-4 py-1 rounded-full text-white text-xs font-semibold mb-3 backdrop-blur-md">
+              Сырой каркас
+            </div>
+            <h3 class="font-['Montserrat'] font-bold text-2xl sm:text-3xl text-white tracking-tight">
+              Общая геометрия каркаса
+            </h3>
+          </div>
+        </div>
+
+        <!-- Raw Photo 2: каркас 1.jpg (4 cols, 2 rows) -->
+        <div class="gallery-item md:col-span-4 md:row-span-2 glass-card rounded-3xl overflow-hidden relative group cursor-pointer"
+             data-img="сырые фото модели/каркас 1.jpg"
+             data-title="Несущая дуговая арка"
+             data-desc="Опорный профиль с переменным радиусом кривизны для оптимального распределения ветровой нагрузки.">
+          <img 
+            src="сырые фото модели/каркас 1.jpg" 
+            alt="Несущая дуговая арка" 
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#06151c]/90 via-[#06151c]/25 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6 sm:p-8">
+            <div class="chip inline-block px-4 py-1 rounded-full text-white text-xs font-semibold mb-3 backdrop-blur-md">
+              Профиль
+            </div>
+            <h3 class="font-['Montserrat'] font-bold text-xl sm:text-2xl text-white tracking-tight">
+              Несущая дуговая арка
+            </h3>
+          </div>
+        </div>
+
+        <!-- Raw Photo 3: каркас 3.jpg (4 cols) -->
+        <div class="gallery-item md:col-span-4 glass-card rounded-3xl overflow-hidden relative group cursor-pointer"
+             data-img="сырые фото модели/каркас 3.jpg"
+             data-title="Опорные цокольные стойки"
+             data-desc="Нижний ярус фиксации стоек к монолитному фундаменту.">
+          <img 
+            src="сырые фото модели/каркас 3.jpg" 
+            alt="Опорные цокольные стойки" 
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#06151c]/80 via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6">
+            <div class="chip inline-block px-3 py-1 rounded-full text-white text-xs font-semibold mb-2 backdrop-blur-md">
+              Цоколь
+            </div>
+            <h3 class="font-['Montserrat'] font-semibold text-lg text-white">
+              Опорные стойки
+            </h3>
+          </div>
+        </div>
+
+        <!-- Raw Photo 4: каркас 4.jpg (4 cols) -->
+        <div class="gallery-item md:col-span-4 glass-card rounded-3xl overflow-hidden relative group cursor-pointer"
+             data-img="сырые фото модели/каркас 4.jpg"
+             data-title="Сетка перекрытий"
+             data-desc="Моделирование ячеек остекления с учетом стандартов светопрозрачных конструкций.">
+          <img 
+            src="сырые фото модели/каркас 4.jpg" 
+            alt="Сетка перекрытий" 
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#06151c]/80 via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6">
+            <div class="chip inline-block px-3 py-1 rounded-full text-white text-xs font-semibold mb-2 backdrop-blur-md">
+              Сетка
+            </div>
+            <h3 class="font-['Montserrat'] font-semibold text-lg text-white">
+              Сетка перекрытий
+            </h3>
+          </div>
+        </div>
+
+        <!-- Raw Photo 5: каркас 5.jpg (4 cols) -->
+        <div class="gallery-item md:col-span-4 glass-card rounded-3xl overflow-hidden relative group cursor-pointer"
+             data-img="сырые фото модели/каркас 5.jpg"
+             data-title="Каркас купола в перспективе"
+             data-desc="Вид изнутри проектируемой теплицы: радиальные лучи и высота свода.">
+          <img 
+            src="сырые фото модели/каркас 5.jpg" 
+            alt="Каркас купола в перспективе" 
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#06151c]/80 via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6">
+            <div class="chip inline-block px-3 py-1 rounded-full text-white text-xs font-semibold mb-2 backdrop-blur-md">
+              Перспектива
+            </div>
+            <h3 class="font-['Montserrat'] font-semibold text-lg text-white">
+              Купол в перспективе
+            </h3>
+          </div>
+        </div>
+
+        <!-- Raw Photo 6: каркас 6.jpg (6 cols) -->
+        <div class="gallery-item md:col-span-6 glass-card rounded-3xl overflow-hidden relative group cursor-pointer"
+             data-img="сырые фото модели/каркас 6.jpg"
+             data-title="Монтажные узлы и сопряжения"
+             data-desc="Узлы примыкания ребер к продольным балкам и коньковому прогону.">
+          <img 
+            src="сырые фото модели/каркас 6.jpg" 
+            alt="Монтажные узлы и сопряжения" 
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#06151c]/80 via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6">
+            <div class="chip inline-block px-3 py-1 rounded-full text-white text-xs font-semibold mb-2 backdrop-blur-md">
+              Узлы
+            </div>
+            <h3 class="font-['Montserrat'] font-semibold text-lg text-white">
+              Монтажные узлы
+            </h3>
+          </div>
+        </div>
+
+        <!-- Raw Photo 7: каркас 7.jpg (6 cols) -->
+        <div class="gallery-item md:col-span-6 glass-card rounded-3xl overflow-hidden relative group cursor-pointer"
+             data-img="сырые фото модели/каркас 7.jpg"
+             data-title="Финальная сборка каркаса"
+             data-desc="Полностью собранный полигональный каркас модели, готовый к наложению стекла.">
+          <img 
+            src="сырые фото модели/каркас 7.jpg" 
+            alt="Финальная сборка каркаса" 
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#06151c]/80 via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6">
+            <div class="chip inline-block px-3 py-1 rounded-full text-white text-xs font-semibold mb-2 backdrop-blur-md">
+              Сборка
+            </div>
+            <h3 class="font-['Montserrat'] font-semibold text-lg text-white">
+              Финальная сборка каркаса
+            </h3>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Minimalist 3D CTA Banner (Заполнение пространства) -->
+    <section class="mt-6 mb-4 fade-in-up">
+      <div class="glass-card rounded-3xl p-6 sm:p-7 flex flex-col sm:flex-row items-center justify-between gap-5 border border-white/10 shadow-xl bg-gradient-to-r from-primary/10 via-[#0e1d25] to-primary/5">
+        <div class="flex items-center gap-4 text-center sm:text-left">
+          <div class="w-12 h-12 rounded-2xl bg-primary/20 border border-primary/30 flex items-center justify-center text-primary shrink-0">
+            <span class="material-symbols-outlined text-2xl">view_in_ar</span>
+          </div>
+          <div>
+            <h3 class="font-['Montserrat'] font-bold text-lg sm:text-xl text-white">
+              Интерактивная 3D Концепция
+            </h3>
+            <p class="text-xs sm:text-sm text-on-surface-variant">
+              Исследуйте архитектуру оранжереи в реальном времени с любого ракурса
+            </p>
+          </div>
+        </div>
+        <a href="model.html" class="btn-view-3d px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold flex items-center gap-2 shrink-0 select-none">
+          <span>Смотреть в 3D</span>
+          <span class="material-symbols-outlined text-base">arrow_forward</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="fixed inset-0 z-50 items-center justify-center bg-black/85 backdrop-blur-xl p-4 sm:p-8">
+    <div class="relative max-w-5xl w-full flex flex-col items-center">
+      <button id="lightbox-close" class="absolute -top-12 right-0 text-white/80 hover:text-primary transition-colors p-2" aria-label="Закрыть">
+        <span class="material-symbols-outlined text-3xl">close</span>
+      </button>
+
+      <div class="relative max-h-[75vh] overflow-hidden rounded-3xl glass-card border border-white/10 shadow-2xl flex items-center justify-center">
+        <img id="lightbox-img" src="" alt="" class="max-h-[75vh] w-auto object-contain rounded-3xl" />
+      </div>
+
+      <div class="mt-4 text-center max-w-xl">
+        <h3 id="lightbox-title" class="font-['Montserrat'] font-bold text-xl text-white mb-1"></h3>
+        <p id="lightbox-desc" class="text-sm text-on-surface-variant"></p>
+      </div>
+
+      <button id="lightbox-prev" class="absolute left-2 sm:-left-12 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full glass-pane text-white flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all shadow-lg" aria-label="Предыдущее фото">
+        <span class="material-symbols-outlined">chevron_left</span>
+      </button>
+      <button id="lightbox-next" class="absolute right-2 sm:-right-12 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full glass-pane text-white flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-all shadow-lg" aria-label="Следующее фото">
+        <span class="material-symbols-outlined">chevron_right</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="w-full py-6 bg-surface border-t border-white/5 mt-4">
+    <div class="flex flex-col md:flex-row justify-between items-center px-6 md:px-16 max-w-7xl mx-auto gap-4 text-center md:text-left">
+      
+      <!-- Brand Text Without Red Function -->
+      <div class="inline-flex items-center gap-1.5 font-['Montserrat'] font-bold text-primary px-3 py-1.5 rounded-full select-none">
+        <span class="brand-glow">Оранжерея</span>
+        <span>• 2026</span>
+      </div>
+
+      <!-- Links -->
+      <div class="flex flex-wrap justify-center gap-6 text-sm text-on-surface-variant">
+        <a href="index.html" class="hover:text-primary transition-colors">Главная</a>
+        <a href="gallery.html" class="text-primary font-semibold transition-colors">Галерея</a>
+        <a href="model.html" class="hover:text-primary transition-colors">3D Модель</a>
+      </div>
+
+      <!-- Copyright -->
+      <div class="text-xs text-tertiary">
+        © 2026 Оранжерея. Все права защищены.
+      </div>
+    </div>
+  </footer>
+
+  <script src="nav.js"></script>
+
+  <!-- Video & Lightbox Logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Robust & Non-interfering Video Player Controller (Mobile & Desktop)
+      const video = document.getElementById('project-video');
+      const playBtn = document.getElementById('video-play-btn');
+      const playIcon = document.getElementById('video-play-icon');
+      const progressBar = document.getElementById('video-progress');
+
+      if (video && playBtn) {
+        let pendingPlayPromise = null;
+
+        function playVideo() {
+          if (video.readyState === 0 && !video.currentSrc) {
+            video.load();
+          }
+          pendingPlayPromise = video.play();
+          if (pendingPlayPromise !== null && pendingPlayPromise !== undefined) {
+            pendingPlayPromise
+              .catch(err => {
+                console.warn('Playback request handled:', err);
+                if (err.name === 'NotAllowedError') {
+                  video.muted = true;
+                  video.play().catch(e2 => console.warn('Muted playback fallback:', e2));
+                }
+              })
+              .finally(() => {
+                pendingPlayPromise = null;
+              });
+          }
+        }
+
+        function pauseVideo() {
+          if (pendingPlayPromise !== null && pendingPlayPromise !== undefined) {
+            pendingPlayPromise
+              .then(() => {
+                video.pause();
+              })
+              .catch(() => {
+                video.pause();
+              });
+          } else {
+            video.pause();
+          }
+        }
+
+        let lastToggleTime = 0;
+
+        function togglePlayPause(e) {
+          const now = Date.now();
+          // Debounce rapid taps
+          if (now - lastToggleTime < 250) {
+            return;
+          }
+          lastToggleTime = now;
+
+          if (video.paused || video.ended) {
+            playVideo();
+          } else {
+            pauseVideo();
+          }
+        }
+
+        // Center Play / Pause Button (1-tap to start or stop)
+        playBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          togglePlayPause(e);
+        });
+
+        // Desktop mouse-only click-to-pause on the video surface
+        video.addEventListener('click', (e) => {
+          // Ignore touch events so mobile native controls (fullscreen, scrubber, volume) receive taps directly
+          if (e.pointerType === 'touch' || ('ontouchstart' in window && window.innerWidth <= 768)) {
+            return;
+          }
+          if (video.controls) {
+            const rect = video.getBoundingClientRect();
+            // Don't intercept clicks inside native control bar
+            if (e.clientY > rect.bottom - 56) {
+              return;
+            }
+          }
+          togglePlayPause(e);
+        });
+
+        // Instant UI sync on actual video state changes
+        video.addEventListener('play', () => {
+          playBtn.style.opacity = '0';
+          playBtn.style.pointerEvents = 'auto'; // Remains active to pause when tapping center!
+          playBtn.style.transform = 'scale(0.85)';
+          if (playIcon) playIcon.textContent = 'pause';
+        });
+
+        video.addEventListener('pause', () => {
+          playBtn.style.opacity = '1';
+          playBtn.style.pointerEvents = 'auto';
+          playBtn.style.transform = 'scale(1)';
+          if (playIcon) playIcon.textContent = 'play_arrow';
+        });
+
+        video.addEventListener('ended', () => {
+          playBtn.style.opacity = '1';
+          playBtn.style.pointerEvents = 'auto';
+          playBtn.style.transform = 'scale(1)';
+          if (playIcon) playIcon.textContent = 'replay';
+        });
+
+
+
+        video.addEventListener('timeupdate', () => {
+          if (video.duration && progressBar) {
+            const percent = (video.currentTime / video.duration) * 100;
+            progressBar.style.width = `${percent}%`;
+          }
+        });
+
+        // Spacebar 1-press play/pause on desktop
+        document.addEventListener('keydown', (e) => {
+          if (e.code === 'Space') {
+            const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+            if (tag !== 'input' && tag !== 'textarea') {
+              const rect = video.getBoundingClientRect();
+              const inView = rect.top < window.innerHeight && rect.bottom > 0;
+              if (inView) {
+                e.preventDefault();
+                togglePlayPause(e);
+              }
+            }
+          }
+        });
+      }
+
+      // 2. Lightbox
+      const items = Array.from(document.querySelectorAll('.gallery-item'));
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxTitle = document.getElementById('lightbox-title');
+      const lightboxDesc = document.getElementById('lightbox-desc');
+      const closeBtn = document.getElementById('lightbox-close');
+      const prevBtn = document.getElementById('lightbox-prev');
+      const nextBtn = document.getElementById('lightbox-next');
+
+      let currentIndex = 0;
+
+      function openLightbox(index) {
+        currentIndex = index;
+        const item = items[currentIndex];
+        const src = item.getAttribute('data-img');
+        const title = item.getAttribute('data-title') || '';
+        const desc = item.getAttribute('data-desc') || '';
+
+        lightboxImg.src = src;
+        lightboxTitle.textContent = title;
+        lightboxDesc.textContent = desc;
+
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      function nextImage() {
+        currentIndex = (currentIndex + 1) % items.length;
+        openLightbox(currentIndex);
+      }
+
+      function prevImage() {
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        openLightbox(currentIndex);
+      }
+
+      items.forEach((item, idx) => {
+        item.addEventListener('click', () => openLightbox(idx));
+      });
+
+      if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+      if (nextBtn) nextBtn.addEventListener('click', nextImage);
+      if (prevBtn) prevBtn.addEventListener('click', prevImage);
+
+      if (lightbox) {
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox) closeLightbox();
+        });
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox || !lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
+      });
+    });
+  </script>
+</body>
+</html>

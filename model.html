@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html class="dark" lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Оранжерея - 3D Модель</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  
+  <!-- Three.js Dependencies -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/MTLLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#06151c",
+            "surface-dim": "#06151c",
+            "surface-bright": "#2c3b43",
+            "surface-container-lowest": "#021017",
+            "surface-container-low": "#0e1d25",
+            "surface-container": "#122129",
+            "surface-container-high": "#1d2c34",
+            "surface-container-highest": "#28373f",
+            "primary": "#accec5",
+            "primary-container": "#84a59d",
+            "on-primary-container": "#1b3b35",
+            "primary-fixed": "#c7eae1",
+            "secondary": "#c1c9bc",
+            "tertiary": "#a6cfc3",
+            "tertiary-container": "#7ea69b",
+            "on-surface": "#d5e5ef",
+            "on-surface-variant": "#c1c8c5",
+            "outline": "#8b9290",
+            "outline-variant": "#414846",
+            "background": "#06151c"
+          },
+          borderRadius: {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            "Montserrat": ["Montserrat", "sans-serif"],
+            "Plus Jakarta Sans": ["Plus Jakarta Sans", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    #canvas-container {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 64px - 72px);
+      min-height: 600px;
+    }
+    #canvas-container canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+    }
+    #canvas-container canvas:active {
+      cursor: grabbing;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col font-['Plus_Jakarta_Sans'] overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+
+  <!-- TopNavBar -->
+  <header class="fixed top-0 w-full z-50 bg-[#06151c]/60 backdrop-blur-[32px] border-b border-white/10 shadow-[0_40px_40px_rgba(172,206,197,0.15)]">
+    <div class="flex justify-between items-center px-6 md:px-16 py-4 max-w-7xl mx-auto">
+      
+      <!-- Brand Logo + Secret Leaf Trigger -->
+      <div class="flex items-center gap-3">
+        <div class="leaf-icon-btn w-10 h-10 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center hover:scale-110 transition-all duration-300 cursor-pointer hover:bg-primary/30 hover:border-primary shadow-[0_0_12px_rgba(172,206,197,0.3)]">
+          <span class="material-symbols-outlined text-primary text-2xl select-none">eco</span>
+        </div>
+        <a href="index.html" class="brand-glow font-['Montserrat'] font-bold text-2xl md:text-3xl text-primary tracking-tight">
+          Оранжерея
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a class="font-['Montserrat'] font-medium text-on-surface-variant/80 hover:text-primary transition-colors duration-300" href="index.html">
+          Главная
+        </a>
+        <a class="font-['Montserrat'] font-medium text-on-surface-variant/80 hover:text-primary transition-colors duration-300" href="gallery.html">
+          Галерея
+        </a>
+        <a class="font-['Montserrat'] font-semibold text-primary border-b-2 border-primary pb-1 transition-colors duration-300" href="model.html">
+          3D Модель
+        </a>
+        <button class="theme-toggle-btn ml-2" type="button" aria-label="Переключить тему" title="Переключить тему">
+          <span class="material-symbols-outlined theme-icon-dark text-xl">light_mode</span>
+          <span class="material-symbols-outlined theme-icon-light text-xl">dark_mode</span>
+        </button>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="md:hidden text-primary p-2 focus:outline-none" aria-label="Открыть меню">
+        <span class="material-symbols-outlined text-3xl">menu</span>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0e1d25]/95 backdrop-blur-2xl border-b border-white/10 px-6 py-6 flex flex-col space-y-4">
+      <a class="font-['Montserrat'] font-medium text-on-surface-variant hover:text-primary text-lg" href="index.html">Главная</a>
+      <a class="font-['Montserrat'] font-medium text-on-surface-variant hover:text-primary text-lg" href="gallery.html">Галерея</a>
+      <a class="font-['Montserrat'] font-semibold text-primary text-lg" href="model.html">3D Модель</a>
+      <div class="mobile-theme-row pt-4 mt-2 border-t border-white/10 flex items-center justify-between">
+        <span class="text-sm font-['Montserrat'] font-medium text-on-surface-variant">Тема оформления</span>
+        <button class="theme-toggle-btn" type="button" aria-label="Переключить тему">
+          <span class="material-symbols-outlined theme-icon-dark text-xl">light_mode</span>
+          <span class="material-symbols-outlined theme-icon-light text-xl">dark_mode</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 3D Main Section (Seamless Full Viewport, No Empty Space) -->
+  <main class="flex-grow pt-16 relative w-full flex flex-col overflow-hidden">
+    
+    <!-- 3D Canvas Viewport -->
+    <div id="canvas-container" class="relative w-full border-b border-white/5 bg-gradient-to-b from-transparent via-[#0e1d25] to-transparent">
+      
+      <!-- Three.js Canvas appended here dynamically -->
+      
+      <!-- Loading / View Overlay -->
+      <div id="loading-overlay" class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[#06151c]/90 backdrop-blur-md transition-opacity duration-700 p-4">
+        <div class="glass-card p-8 sm:p-10 rounded-3xl flex flex-col items-center max-w-sm w-full text-center border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
+          <div id="loading-spinner" class="w-14 h-14 rounded-full border-4 border-sky-400/20 border-t-sky-400 animate-spin mb-4"></div>
+          <h3 class="font-['Montserrat'] font-bold text-xl sm:text-2xl text-white mb-2">3D Модель Оранжереи</h3>
+          <p id="loading-text" class="text-xs sm:text-sm text-cyan-200/80 mb-6">Интерактивная архитектурная концепция</p>
+          <div id="loading-bar-wrap" class="w-52 h-1.5 bg-surface-container rounded-full overflow-hidden mb-6 hidden">
+            <div id="loading-bar" class="h-full bg-gradient-to-r from-sky-400 to-white w-1/4 transition-all duration-300"></div>
+          </div>
+          <input type="file" id="manual-file-input" accept=".glb,.gltf,.obj" class="hidden" />
+          <button id="btn-view-model" class="btn-view-3d px-8 py-3.5 rounded-full text-sm sm:text-base flex items-center justify-center gap-2.5 cursor-pointer select-none">
+            <span class="material-symbols-outlined text-xl">view_in_ar</span>
+            <span>Просмотр модели</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Top Overlay Controls Toolbar -->
+      <div class="absolute top-6 left-6 right-6 z-10 flex flex-wrap justify-end items-center pointer-events-none gap-3">
+        <div class="glass-pane p-1.5 rounded-2xl pointer-events-auto flex items-center gap-1 backdrop-blur-xl border border-white/10 shadow-lg">
+          
+          <!-- Auto Rotate Toggle -->
+          <button id="btn-rotate" class="px-3.5 py-2 rounded-xl text-xs font-['Montserrat'] font-semibold text-white bg-white/10 hover:bg-primary/20 hover:text-primary transition-all flex items-center gap-1.5" title="Автоматическое вращение">
+            <span class="material-symbols-outlined text-base">sync</span>
+            <span class="hidden sm:inline">Вращение</span>
+          </button>
+
+          <!-- Wireframe Toggle -->
+          <button id="btn-wireframe" class="px-3.5 py-2 rounded-xl text-xs font-['Montserrat'] font-semibold text-white hover:bg-primary/20 hover:text-primary transition-all flex items-center gap-1.5" title="Режим каркасной сетки">
+            <span class="material-symbols-outlined text-base">grid_4x4</span>
+            <span class="hidden sm:inline">Каркас</span>
+          </button>
+
+          <!-- Lighting Switch -->
+          <button id="btn-light" class="px-3.5 py-2 rounded-xl text-xs font-['Montserrat'] font-semibold text-white hover:bg-primary/20 hover:text-primary transition-all flex items-center gap-1.5" title="Переключить свет">
+            <span class="material-symbols-outlined text-base">wb_sunny</span>
+            <span class="hidden sm:inline" id="light-mode-text">День</span>
+          </button>
+
+          <!-- UV Flip Toggle -->
+          <button id="btn-flip-uv" class="px-3.5 py-2 rounded-xl text-xs font-['Montserrat'] font-semibold text-white hover:bg-primary/20 hover:text-primary transition-all flex items-center gap-1.5" title="Инвертировать ориентацию текстур UV">
+            <span class="material-symbols-outlined text-base">swap_vert</span>
+            <span class="hidden sm:inline">UV Flip</span>
+          </button>
+
+          <!-- Reset Camera -->
+          <button id="btn-reset" class="px-3.5 py-2 rounded-xl text-xs font-['Montserrat'] font-semibold text-white hover:bg-primary/20 hover:text-primary transition-all flex items-center gap-1.5" title="Сбросить камеру">
+            <span class="material-symbols-outlined text-base">restart_alt</span>
+            <span class="hidden sm:inline">Сброс</span>
+          </button>
+
+          <!-- Fullscreen -->
+          <button id="btn-fullscreen" class="p-2 rounded-xl text-white hover:bg-primary/20 hover:text-primary transition-all" title="На весь экран">
+            <span class="material-symbols-outlined text-base">fullscreen</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Corner Control Hints Widget (Мышь для ПК и Пальцы для Телефона) -->
+      <div id="controls-hint-widget" class="absolute bottom-6 left-6 z-20 pointer-events-auto select-none">
+        
+        <!-- Collapsed Mini Pill Button -->
+        <button id="btn-expand-hints" class="hidden glass-pane px-3.5 py-2.5 rounded-2xl border border-white/10 hover:border-primary/40 text-white flex items-center gap-2.5 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-105" title="Показать управление">
+          <span class="material-symbols-outlined hint-mouse-icon text-sky-300 text-lg">mouse</span>
+          <span class="w-1 h-1 rounded-full hint-dot bg-white/30"></span>
+          <span class="material-symbols-outlined hint-touch-icon text-emerald-300 text-lg">touch_app</span>
+          <span class="text-xs font-['Montserrat'] font-semibold hint-expand-label text-on-surface-variant ml-1">Управление</span>
+        </button>
+
+        <!-- Expanded Card -->
+        <div id="hints-card" class="glass-pane rounded-3xl p-4 border border-white/10 backdrop-blur-2xl shadow-[0_16px_40px_rgba(0,0,0,0.5)] flex flex-col gap-3 min-w-[250px] sm:min-w-[280px] transition-all duration-300">
+          
+          <!-- Header with minimize button -->
+          <div class="hints-header flex items-center justify-between pb-2 border-b border-white/10">
+            <div class="flex items-center gap-2 text-xs font-['Montserrat'] font-bold text-white tracking-wide">
+              <span class="material-symbols-outlined hints-icon text-primary text-base">view_in_ar</span>
+              <span class="hints-title">Управление 3D</span>
+            </div>
+            <button id="btn-collapse-hints" class="w-6 h-6 rounded-lg text-white/50 hover:text-white hover:bg-white/10 flex items-center justify-center transition-colors" title="Свернуть подсказку">
+              <span class="material-symbols-outlined text-sm">close</span>
+            </button>
+          </div>
+
+          <!-- PC / Mouse Hint -->
+          <div class="hint-row hint-row-mouse flex items-center gap-3 p-2.5 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-sky-400/30 transition-all">
+            <div class="hint-icon-box w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-400/20 flex items-center justify-center text-sky-300 shrink-0 shadow-[0_0_12px_rgba(56,189,248,0.2)]">
+              <span class="material-symbols-outlined text-2xl">mouse</span>
+            </div>
+            <div class="flex-1 text-xs">
+              <div class="font-['Montserrat'] font-semibold hint-title text-sky-200 flex items-center gap-1.5">
+                <span>ПК / Мышь</span>
+              </div>
+              <div class="hint-desc text-[11px] text-on-surface-variant/90 mt-0.5 leading-tight">
+                ЛКМ — вращение<br>Колесико — зум
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile / Fingers Touch Hint -->
+          <div class="hint-row hint-row-touch flex items-center gap-3 p-2.5 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-emerald-400/30 transition-all">
+            <div class="hint-icon-box w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-400/20 flex items-center justify-center text-emerald-300 shrink-0 shadow-[0_0_12px_rgba(52,211,153,0.2)]">
+              <span class="material-symbols-outlined text-2xl">touch_app</span>
+            </div>
+            <div class="flex-1 text-xs">
+              <div class="font-['Montserrat'] font-semibold hint-title text-emerald-200 flex items-center gap-1.5">
+                <span>Телефон / Пальцы</span>
+              </div>
+              <div class="hint-desc text-[11px] text-on-surface-variant/90 mt-0.5 leading-tight">
+                1 палец — вращение<br>2 пальца — масштаб
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Contact Modal -->
+  <!-- Footer -->
+  <footer class="w-full py-8 bg-surface border-t border-white/5 mt-auto">
+    <div class="flex flex-col md:flex-row justify-between items-center px-6 md:px-16 max-w-7xl mx-auto gap-4 text-center md:text-left">
+      
+      <!-- Brand Text Without Red Function -->
+      <div class="inline-flex items-center gap-1.5 font-['Montserrat'] font-bold text-primary px-3 py-1.5 rounded-full select-none">
+        <span class="brand-glow">Оранжерея</span>
+        <span>• 2026</span>
+      </div>
+
+      <!-- Links -->
+      <div class="flex flex-wrap justify-center gap-6 text-sm text-on-surface-variant">
+        <a href="index.html" class="hover:text-primary transition-colors">Главная</a>
+        <a href="gallery.html" class="hover:text-primary transition-colors">Галерея</a>
+        <a href="model.html" class="text-primary font-semibold transition-colors">3D Модель</a>
+      </div>
+
+      <!-- Copyright -->
+      <div class="text-xs text-tertiary">
+        © 2026 Оранжерея. Все права защищены.
+      </div>
+    </div>
+  </footer>
+
+  <script src="nav.js"></script>
+
+  <!-- Three.js 3D Engine Script -->
+  <script>
+    let scene, camera, renderer, controls, loadedObject;
+    let dirLight, ambientLight, hemiLight;
+    let isWireframe = false;
+    let isFlipped = false;
+    let lightMode = 0; // 0: Day, 1: Sunset, 2: Night
+
+    const container = document.getElementById('canvas-container');
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const loadingText = document.getElementById('loading-text');
+    const loadingBar = document.getElementById('loading-bar');
+
+    function init() {
+      // 1. Scene
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x06151c);
+      scene.fog = new THREE.FogExp2(0x06151c, 0.015);
+
+      // 2. Camera
+      camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 2000);
+      camera.position.set(22, 14, 22);
+
+      // 3. Renderer
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.outputEncoding = THREE.sRGBEncoding;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.1;
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      container.appendChild(renderer.domElement);
+
+      // 4. Orbit Controls
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 0.8;
+      controls.maxPolarAngle = Math.PI / 2 - 0.02; // Don't go underneath floor
+      controls.minDistance = 3;
+      controls.maxDistance = 100;
+
+      // 5. Lighting Setup
+      ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(ambientLight);
+
+      hemiLight = new THREE.HemisphereLight(0xd5e5ef, 0x122129, 0.6);
+      hemiLight.position.set(0, 50, 0);
+      scene.add(hemiLight);
+
+      dirLight = new THREE.DirectionalLight(0xfff5e6, 1.2);
+      dirLight.position.set(35, 50, 30);
+      dirLight.castShadow = true;
+      dirLight.shadow.mapSize.width = 2048;
+      dirLight.shadow.mapSize.height = 2048;
+      dirLight.shadow.camera.near = 0.5;
+      dirLight.shadow.camera.far = 150;
+      const d = 25;
+      dirLight.shadow.camera.left = -d;
+      dirLight.shadow.camera.right = d;
+      dirLight.shadow.camera.top = d;
+      dirLight.shadow.camera.bottom = -d;
+      dirLight.shadow.bias = -0.0005;
+      scene.add(dirLight);
+
+      // Subtle cyan accent fill light
+      const accentLight = new THREE.DirectionalLight(0xaccec5, 0.4);
+      accentLight.position.set(-30, 20, -30);
+      scene.add(accentLight);
+
+      // 6. Ground Grid and Pedestal
+      const grid = new THREE.GridHelper(50, 50, 0xaccec5, 0x1d2c34);
+      grid.position.y = -0.01;
+      scene.add(grid);
+
+      // Ground plane to receive soft shadow
+      const groundGeo = new THREE.PlaneGeometry(120, 120);
+      const groundMat = new THREE.ShadowMaterial({ opacity: 0.35 });
+      const ground = new THREE.Mesh(groundGeo, groundMat);
+      ground.rotation.x = -Math.PI / 2;
+      ground.position.y = -0.02;
+      ground.receiveShadow = true;
+      scene.add(ground);
+
+      // 7. Load Model with Resilient Fallback Paths
+      loadModel();
+
+      // 8. Event Listeners & Theme Sync
+      window.addEventListener('resize', onWindowResize);
+      window.addEventListener('themeChanged', (e) => applyThemeTo3D(e.detail.theme));
+      applyThemeTo3D(document.documentElement.classList.contains('light') ? 'light' : 'dark');
+      setupUIControls();
+
+      // 9. Animation Loop
+      animate();
+    }
+
+    function applyThemeTo3D(theme) {
+      if (!scene) return;
+      const isLight = theme === 'light';
+      if (isLight) {
+        scene.background.setHex(0xeef6fa);
+        if (scene.fog) scene.fog.color.setHex(0xeef6fa);
+        if (hemiLight) {
+          hemiLight.color.setHex(0xffffff);
+          hemiLight.groundColor.setHex(0xcbe0ee);
+          hemiLight.intensity = 0.9;
+        }
+        if (ambientLight) ambientLight.intensity = 0.85;
+        if (dirLight) {
+          dirLight.color.setHex(0xfffaed);
+          dirLight.intensity = 1.35;
+        }
+      } else {
+        scene.background.setHex(0x06151c);
+        if (scene.fog) scene.fog.color.setHex(0x06151c);
+        if (hemiLight) {
+          hemiLight.color.setHex(0xd5e5ef);
+          hemiLight.groundColor.setHex(0x122129);
+          hemiLight.intensity = 0.6;
+        }
+        if (ambientLight) ambientLight.intensity = 0.7;
+        if (dirLight) {
+          dirLight.color.setHex(0xfff5e6);
+          dirLight.intensity = 1.2;
+        }
+      }
+    }
+
+    // Try loading model from possible paths (GLB prioritized)
+    function loadModel() {
+      const glbPaths = [
+        'model.glb',
+        'model/model.glb',
+        'assets/model/model.glb'
+      ];
+
+      let glbIndex = 0;
+
+      function tryLoadGLB() {
+        if (glbIndex >= glbPaths.length) {
+          // Fallback to OBJ if no GLB is found
+          tryLoadOBJ();
+          return;
+        }
+
+        const glbPath = glbPaths[glbIndex];
+        loadingText.textContent = `Загрузка 3D модели (${glbPath})...`;
+
+        const loader = new THREE.GLTFLoader();
+        if (THREE.DRACOLoader) {
+          const dracoLoader = new THREE.DRACOLoader();
+          dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.4.3/');
+          loader.setDRACOLoader(dracoLoader);
+        }
+
+        loader.load(
+          glbPath,
+          function (gltf) {
+            const object = gltf.scene || gltf.scenes[0];
+            onModelLoaded(object);
+          },
+          function (xhr) {
+            if (xhr.lengthComputable && xhr.total > 0) {
+              const percent = Math.round((xhr.loaded / xhr.total) * 100);
+              loadingBar.style.width = percent + '%';
+              const mbLoaded = (xhr.loaded / (1024 * 1024)).toFixed(1);
+              const mbTotal = (xhr.total / (1024 * 1024)).toFixed(1);
+              loadingText.textContent = `Загрузка 3D модели: ${percent}% (${mbLoaded} МБ / ${mbTotal} МБ)`;
+            } else if (xhr.loaded > 0) {
+              const mbLoaded = (xhr.loaded / (1024 * 1024)).toFixed(1);
+              loadingText.textContent = `Загрузка 3D модели: ${mbLoaded} МБ...`;
+              loadingBar.style.width = '60%';
+            }
+          },
+          function (err) {
+            console.warn(`Failed loading GLB from ${glbPath}, trying next...`, err);
+            glbIndex++;
+            tryLoadGLB();
+          }
+        );
+      }
+
+      // Candidate paths for OBJ fallback
+      const candidatePaths = [
+        'model/',
+        './'
+      ];
+
+      let candidateIndex = 0;
+
+      function tryLoadOBJ() {
+        if (candidateIndex >= candidatePaths.length) {
+          const spinner = document.getElementById('loading-spinner');
+          const barWrap = document.getElementById('loading-bar-wrap');
+          const btnViewModel = document.getElementById('btn-view-model');
+          if (spinner) spinner.style.display = 'none';
+          if (barWrap) barWrap.style.display = 'none';
+          if (btnViewModel) btnViewModel.classList.remove('hidden');
+          loadingText.textContent = 'Нажмите для просмотра 3D модели';
+          return;
+        }
+
+        const basePath = candidatePaths[candidateIndex];
+        loadingText.textContent = `Загрузка материалов (${basePath})...`;
+        loadingBar.style.width = '35%';
+
+        const mtlLoader = new THREE.MTLLoader();
+        mtlLoader.setPath(basePath);
+        mtlLoader.load(
+          '3D.mtl',
+          function (materials) {
+            materials.preload();
+            
+            // Customize materials for glass transparency, repeat wrapping and vibrant colors
+            for (const matName in materials.materials) {
+              const mat = materials.materials[matName];
+              const nameLower = matName.toLowerCase();
+
+              // 1. Texture Map Enhancement
+              if (mat.map) {
+                mat.map.wrapS = THREE.RepeatWrapping;
+                mat.map.wrapT = THREE.RepeatWrapping;
+                mat.map.encoding = THREE.sRGBEncoding;
+                mat.color.setHex(0xffffff); // Don't darken textures with Kd
+                mat.map.needsUpdate = true;
+              }
+
+              // 2. Glass Materials
+              if (nameLower.includes('glass') || mat.opacity < 0.9) {
+                mat.transparent = true;
+                mat.opacity = 0.35;
+                mat.depthWrite = false; // CRITICAL: allows viewing interior textures through glass
+                mat.depthTest = true;
+                mat.shininess = 90;
+                mat.side = THREE.DoubleSide;
+              } else {
+                mat.transparent = false;
+                mat.opacity = 1.0;
+                mat.depthWrite = true;
+                mat.side = THREE.DoubleSide;
+              }
+            }
+
+            loadingText.textContent = 'Загрузка геометрии 3D.obj...';
+            loadingBar.style.width = '65%';
+
+            const objLoader = new THREE.OBJLoader();
+            objLoader.setMaterials(materials);
+            objLoader.setPath(basePath);
+            objLoader.load(
+              '3D.obj',
+              function (object) {
+                onModelLoaded(object);
+              },
+              function (xhr) {
+                if (xhr.lengthComputable) {
+                  const percent = Math.round((xhr.loaded / xhr.total) * 100);
+                  loadingBar.style.width = (65 + percent * 0.3) + '%';
+                  loadingText.textContent = `Загрузка геометрии: ${percent}%`;
+                }
+              },
+              function (err) {
+                console.warn(`Failed loading OBJ from ${basePath}, trying next candidate...`, err);
+                candidateIndex++;
+                tryLoadOBJ();
+              }
+            );
+          },
+          function (xhr) {
+            // progress of MTL
+          },
+          function (err) {
+            console.warn(`Failed loading MTL from ${basePath}, trying next candidate...`, err);
+            candidateIndex++;
+            tryLoadOBJ();
+          }
+        );
+      }
+
+      // Start loading GLB first!
+      tryLoadGLB();
+    }
+
+    function onModelLoaded(object) {
+      loadedObject = object;
+
+      // Enable shadows and ensure proper texture tiling and colors for all maps
+      const visitedTexturesOnLoad = new Set();
+      object.traverse(function (child) {
+        if (child.isMesh) {
+          child.castShadow = true;
+          child.receiveShadow = true;
+          const mats = Array.isArray(child.material) ? child.material : [child.material];
+          mats.forEach(m => {
+            if (m) {
+              const mapProps = ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'emissiveMap', 'bumpMap', 'alphaMap', 'specularMap'];
+              mapProps.forEach(prop => {
+                const tex = m[prop];
+                if (tex && tex.isTexture && !visitedTexturesOnLoad.has(tex)) {
+                  visitedTexturesOnLoad.add(tex);
+                  tex.wrapS = THREE.RepeatWrapping;
+                  tex.wrapT = THREE.RepeatWrapping;
+                  if (prop === 'map') {
+                    tex.encoding = THREE.sRGBEncoding;
+                    if (m.color) m.color.setHex(0xffffff);
+                  }
+                }
+              });
+              m.side = THREE.DoubleSide;
+            }
+          });
+        }
+      });
+
+      // Compute bounding box and center the model
+      const box = new THREE.Box3().setFromObject(object);
+      const size = box.getSize(new THREE.Vector3());
+      const center = box.getCenter(new THREE.Vector3());
+
+      const maxDim = Math.max(size.x, size.y, size.z);
+      const targetSize = 14; // normalized visual scale
+      const scale = targetSize / (maxDim || 1);
+      object.scale.set(scale, scale, scale);
+
+      // Re-center after scaling
+      box.setFromObject(object);
+      box.getCenter(center);
+      box.getSize(size);
+
+      object.position.x = -center.x;
+      object.position.y = -box.min.y; // Sit on the ground
+      object.position.z = -center.z;
+
+      scene.add(object);
+
+      // If user toggled UV flip, apply to loaded model
+      if (isFlipped) {
+        toggleUVFlip(object);
+      }
+
+      // Position camera nicely
+      const dist = Math.max(size.x, size.z) * 1.4 + size.y;
+      camera.position.set(dist * 0.9, size.y * 0.9 + 3, dist * 0.9);
+      controls.target.set(0, size.y * 0.35, 0);
+      controls.update();
+
+      // Fade out loading screen
+      loadingBar.style.width = '100%';
+      loadingText.textContent = 'Готово!';
+      setTimeout(() => {
+        loadingOverlay.style.opacity = '0';
+        setTimeout(() => {
+          loadingOverlay.style.display = 'none';
+        }, 700);
+      }, 300);
+    }
+
+    function setupUIControls() {
+      // Rotate Toggle
+      const btnRotate = document.getElementById('btn-rotate');
+      btnRotate.addEventListener('click', () => {
+        controls.autoRotate = !controls.autoRotate;
+        btnRotate.classList.toggle('bg-primary/30', controls.autoRotate);
+        btnRotate.classList.toggle('text-primary', controls.autoRotate);
+      });
+      btnRotate.classList.add('bg-primary/30', 'text-primary');
+
+      // Wireframe Toggle
+      const btnWireframe = document.getElementById('btn-wireframe');
+      btnWireframe.addEventListener('click', () => {
+        isWireframe = !isWireframe;
+        btnWireframe.classList.toggle('bg-primary/30', isWireframe);
+        btnWireframe.classList.toggle('text-primary', isWireframe);
+        if (loadedObject) {
+          loadedObject.traverse(child => {
+            if (child.isMesh && child.material) {
+              if (Array.isArray(child.material)) {
+                child.material.forEach(m => m.wireframe = isWireframe);
+              } else {
+                child.material.wireframe = isWireframe;
+              }
+            }
+          });
+        }
+      });
+
+      // Lighting Switch
+      const btnLight = document.getElementById('btn-light');
+      const lightModeText = document.getElementById('light-mode-text');
+      btnLight.addEventListener('click', () => {
+        lightMode = (lightMode + 1) % 3;
+        if (lightMode === 0) {
+          // Daylight
+          lightModeText.textContent = 'День';
+          scene.background.setHex(0x06151c);
+          scene.fog.color.setHex(0x06151c);
+          dirLight.color.setHex(0xfff5e6);
+          dirLight.intensity = 1.2;
+          ambientLight.intensity = 0.7;
+        } else if (lightMode === 1) {
+          // Sunset
+          lightModeText.textContent = 'Закат';
+          scene.background.setHex(0x1a0f18);
+          scene.fog.color.setHex(0x1a0f18);
+          dirLight.color.setHex(0xff7744);
+          dirLight.intensity = 1.5;
+          ambientLight.intensity = 0.4;
+        } else {
+          // Night Cyber
+          lightModeText.textContent = 'Ночь';
+          scene.background.setHex(0x02080d);
+          scene.fog.color.setHex(0x02080d);
+          dirLight.color.setHex(0x44aaff);
+          dirLight.intensity = 0.6;
+          ambientLight.intensity = 0.25;
+        }
+      });
+
+      // Reset Camera
+      const btnReset = document.getElementById('btn-reset');
+      btnReset.addEventListener('click', () => {
+        if (loadedObject) {
+          const box = new THREE.Box3().setFromObject(loadedObject);
+          const size = box.getSize(new THREE.Vector3());
+          const dist = Math.max(size.x, size.z) * 1.4 + size.y;
+          camera.position.set(dist * 0.9, size.y * 0.9 + 3, dist * 0.9);
+          controls.target.set(0, size.y * 0.35, 0);
+          controls.update();
+        }
+      });
+
+      // Fullscreen Toggle
+      const btnFullscreen = document.getElementById('btn-fullscreen');
+      btnFullscreen.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          container.requestFullscreen().catch(err => {
+            console.error(`Error attempting to enable fullscreen: ${err.message}`);
+          });
+        } else {
+          document.exitFullscreen();
+        }
+      });
+
+      // UV Flip Toggle
+      const btnFlipUV = document.getElementById('btn-flip-uv');
+      if (btnFlipUV) {
+        btnFlipUV.addEventListener('click', () => {
+          isFlipped = !isFlipped;
+          btnFlipUV.classList.toggle('active-toggle', isFlipped);
+          btnFlipUV.classList.toggle('bg-primary/30', isFlipped);
+          btnFlipUV.classList.toggle('text-primary', isFlipped);
+          btnFlipUV.title = isFlipped ? 'Ориентация UV: Инвертирована (кликните для сброса)' : 'Инвертировать ориентацию текстур UV';
+          toggleUVFlip();
+        });
+      }
+
+      function toggleUVFlip(target) {
+        const root = target || loadedObject;
+        if (!root) return;
+
+        const visitedGeometries = new Set();
+        const visitedTextures = new Set();
+
+        root.traverse(child => {
+          if (child.isMesh) {
+            let hasUV = false;
+
+            // 1. Direct Vertex Buffer UV coordinate inversion with pristine cache
+            if (child.geometry && child.geometry.attributes) {
+              const geom = child.geometry;
+              if (!visitedGeometries.has(geom)) {
+                visitedGeometries.add(geom);
+
+                for (const attrName in geom.attributes) {
+                  const lower = attrName.toLowerCase();
+                  if (lower.startsWith('uv') || lower.startsWith('texcoord')) {
+                    const attr = geom.attributes[attrName];
+                    if (attr && attr.count > 0) {
+                      hasUV = true;
+                      const cacheKey = '_orig_' + attrName;
+                      if (!geom.userData[cacheKey]) {
+                        const orig = new Float32Array(attr.count);
+                        for (let i = 0; i < attr.count; i++) {
+                          orig[i] = attr.getY(i);
+                        }
+                        geom.userData[cacheKey] = orig;
+                      }
+
+                      const origY = geom.userData[cacheKey];
+                      for (let i = 0; i < attr.count; i++) {
+                        attr.setY(i, isFlipped ? (1.0 - origY[i]) : origY[i]);
+                      }
+
+                      attr.needsUpdate = true;
+                      if (attr.isInterleavedBufferAttribute && attr.data) {
+                        attr.data.needsUpdate = true;
+                      }
+                    }
+                  }
+                }
+              } else {
+                hasUV = true;
+              }
+            }
+
+            // 2. Safe fallback for meshes without UV attributes: invert texture transforms
+            if (!hasUV && child.material) {
+              const mats = Array.isArray(child.material) ? child.material : [child.material];
+              mats.forEach(mat => {
+                if (!mat) return;
+                const mapProps = ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'emissiveMap', 'bumpMap', 'alphaMap', 'specularMap'];
+                mapProps.forEach(prop => {
+                  const tex = mat[prop];
+                  if (tex && tex.isTexture && !visitedTextures.has(tex)) {
+                    visitedTextures.add(tex);
+                    tex.wrapS = THREE.RepeatWrapping;
+                    tex.wrapT = THREE.RepeatWrapping;
+                    if (tex.userData._orig_repeat_y === undefined) {
+                      tex.userData._orig_repeat_y = tex.repeat.y;
+                      tex.userData._orig_offset_y = tex.offset.y;
+                    }
+                    if (isFlipped) {
+                      tex.repeat.y = -Math.abs(tex.userData._orig_repeat_y);
+                      tex.offset.y = 1.0 - tex.userData._orig_offset_y;
+                    } else {
+                      tex.repeat.y = tex.userData._orig_repeat_y;
+                      tex.offset.y = tex.userData._orig_offset_y;
+                    }
+                  }
+                });
+              });
+            }
+          }
+        });
+
+        if (renderer && scene && camera) {
+          renderer.render(scene, camera);
+        }
+      }
+
+      // View Model Button & File Picker
+      const fileInput = document.getElementById('manual-file-input');
+      const btnViewModel = document.getElementById('btn-view-model');
+      if (btnViewModel) {
+        btnViewModel.addEventListener('click', () => {
+          if (loadedObject) {
+            loadingOverlay.style.opacity = '0';
+            setTimeout(() => { loadingOverlay.style.display = 'none'; }, 600);
+          } else if (window.location.protocol === 'file:') {
+            if (fileInput) fileInput.click();
+          } else {
+            btnViewModel.innerHTML = '<span class="material-symbols-outlined text-xl animate-spin">progress_activity</span><span>Загрузка...</span>';
+          }
+        });
+      }
+      if (fileInput) {
+        fileInput.addEventListener('change', (e) => {
+          const file = e.target.files[0];
+          if (file) loadFromFile(file);
+        });
+      }
+
+      // Control Hints Toggle (Свернуть / Развернуть подсказку)
+      const btnCollapseHints = document.getElementById('btn-collapse-hints');
+      const btnExpandHints = document.getElementById('btn-expand-hints');
+      const hintsCard = document.getElementById('hints-card');
+      if (btnCollapseHints && btnExpandHints && hintsCard) {
+        btnCollapseHints.addEventListener('click', () => {
+          hintsCard.classList.add('hidden');
+          btnExpandHints.classList.remove('hidden');
+        });
+        btnExpandHints.addEventListener('click', () => {
+          btnExpandHints.classList.add('hidden');
+          hintsCard.classList.remove('hidden');
+        });
+      }
+
+
+      container.addEventListener('dragover', (e) => e.preventDefault());
+      container.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        if (file) {
+          loadFromFile(file);
+        }
+      });
+
+      function loadFromFile(file) {
+        const spinner = document.getElementById('loading-spinner');
+        const barWrap = document.getElementById('loading-bar-wrap');
+        const btnViewModel = document.getElementById('btn-view-model');
+        if (spinner) spinner.style.display = 'block';
+        if (barWrap) barWrap.style.display = 'block';
+        if (btnViewModel) btnViewModel.classList.add('hidden');
+
+        loadingOverlay.style.display = 'flex';
+        loadingOverlay.style.opacity = '1';
+        loadingBar.style.width = '30%';
+        loadingText.textContent = `Загрузка модели ${file.name}...`;
+
+        const nameLower = file.name.toLowerCase();
+        if (nameLower.endsWith('.glb') || nameLower.endsWith('.gltf')) {
+          const reader = new FileReader();
+          reader.onprogress = function(evt) {
+            if (evt.lengthComputable) {
+              const p = Math.round((evt.loaded / evt.total) * 60);
+              loadingBar.style.width = p + '%';
+            }
+          };
+          reader.onload = function(evt) {
+            loadingBar.style.width = '75%';
+            loadingText.textContent = 'Обработка 3D-геометрии и материалов...';
+            const arrayBuffer = evt.target.result;
+            const gltfLoader = new THREE.GLTFLoader();
+            if (THREE.DRACOLoader) {
+              const dracoLoader = new THREE.DRACOLoader();
+              dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.4.3/');
+              gltfLoader.setDRACOLoader(dracoLoader);
+            }
+            gltfLoader.parse(arrayBuffer, '', function(gltf) {
+              const obj = gltf.scene || gltf.scenes[0];
+              onModelLoaded(obj);
+            }, function(err) {
+              loadingText.textContent = 'Ошибка загрузки GLB: ' + err.message;
+            });
+          };
+          reader.readAsArrayBuffer(file);
+        } else {
+          const reader = new FileReader();
+          reader.onload = function(evt) {
+            const text = evt.target.result;
+            const objLoader = new THREE.OBJLoader();
+            const obj = objLoader.parse(text);
+            onModelLoaded(obj);
+          };
+          reader.readAsText(file);
+        }
+      }
+    }
+
+    function onWindowResize() {
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
